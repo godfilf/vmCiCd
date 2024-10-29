@@ -18,5 +18,5 @@ resources:
       name: custom
       flavor: m1.tiny
       image: debian
-      vmCount: 3
+      vmCount: 0
       keyPair: "kollaJump_ecdsa"

@@ -5,20 +5,19 @@ import pulumi.runtime
 import pulumi_openstack as pstack
 import openstack as os_sdk
 import yaml
-import os
-
-os.environ["PULUMI_CONFIG_PASSPHRASE"] = ""
 
 # importo un modulo custom che ho creato per la gestione dei recordset, i quali non sono tracciati da pulumi (li gestisce nova)
 #from plugin.dns_manager import create_connection, manage_recordsets  # Importa le funzioni dal modulo
 import plugin.dns_manager as dns
+import plugin.os_conn as os_conn
+import plugin.sg_manager as sg
 
 # importo tutte le var che ho creato da parte, perchè il __main__.py era diventato illeggibile
 from plugin.globals import *
 
 #import plugin.port_manager
 
-conn = dns.create_connection(auth_url, username, password, tenant)
+conn = os_conn.connection(auth_url, username, password, tenant)
 
 dns.manage_recordsets(conn, zone.id, instance_props)
 
@@ -39,21 +38,11 @@ for vmType in instance_props.keys():
     except NameError:
         image = config.require("image")
     
-    ## Creo il server group 
-    if vmCount > 0:
-        server_group = pstack.compute.ServerGroup(f"{instanceName}.{tenantName}",
-            name=f"{instanceName}.{tenantName}",
-            policies="anti-affinity",
-            rules={
-                "max_server_per_host": 2,
-            }
-        )
+    #server_group = sg.create(vmCount, instanceName, tenantName)
+    #sg.delete(conn, vmCount, instanceName, tenantName)
+    server_group = sg.cd(conn, vmCount, instanceName, tenantName)
 
-    server_group_to_remove = conn.compute.find_server_group(f"{instanceName}.{tenantName}")
-    if server_group_to_remove is not None and vmCount == 0:
-        conn.compute.delete_server_group(server_group_to_remove.id)
 
-    
     # Creazione della risorsa OpenStack Instance da YAML
     if 'instance' in resources:
         #instance_props = resources['instance']['properties']

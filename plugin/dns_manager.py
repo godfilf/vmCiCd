@@ -1,19 +1,9 @@
 import openstack as os_sdk
+import plugin.os_conn as os_conn
 
 # Funzione per stabilire la connessione a OpenStack
 def create_connection(auth_url, username, password, tenant):
-    return os_sdk.connection.Connection(
-        auth={
-            'auth_url': auth_url,
-            'username': username,
-            'password': password,
-            'project_name': tenant,
-            'user_domain_name': 'Default',
-            'project_domain_name': 'Default',
-        },
-        compute_api_version='2',
-        identity_interface='internal',
-    )
+    return os_conn.connection(auth_url, username, password, tenant)
 
 # Funzione per ottenere i recordset esistenti
 def get_existing_recordsets(conn, zone_id):
