@@ -1,0 +1,8 @@
+encryptionsalt: v1:yWF7+6W4oXc=:v1:rD2J54ADngD9djMB:AE7p6Nxhpcp+aMlGOlEPdr73COrx5w==
+config:
+  openstack:userName: test.cluster-dev.ostack.cosmicnet
+  openstack:password: p1pp0123
+  openstack:auth_url: http://10.10.10.99:5000
+  openstack:tenantName: test.cluster-dev.ostack.cosmicnet
+  openstack:region: RegionOne
+  network_name: network.test.cluster-dev.ostack.cosmicnet
