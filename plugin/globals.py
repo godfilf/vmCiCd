@@ -2,37 +2,38 @@ import pulumi
 import pulumi_openstack as pstack
 import yaml
 
-# Caricare la configurazione specifica dello stack
+# Carica la configurazione e le variabili di ambiente
 config = pulumi.Config()
-
-# Recupera tutte le configurazioni per lo stack corrente
 config_values = pulumi.runtime.get_config_env()
 
-# Stampa tutte le chiavi e i valori di configurazione
+# Stampa tutte le configurazioni per verifica (può essere rimosso in produzione)
 for key, value in config_values.items():
     print(f"Key: {key}, Value: {value}")
 
-# Carica le risorse dal file YAML
+# Carica le risorse dal file YAML e ottieni le proprietà dell'istanza
 with open('Pulumi.resources.yaml', 'r') as yaml_file:
-    yaml_content = yaml.safe_load(yaml_file)
+    resources = yaml.safe_load(yaml_file).get('resources', {})
+instance_props = resources.get('instance', {})
 
-# Estrai le informazioni sulle risorse dal file YAML
-resources = yaml_content.get('resources', {})
+# Recupera l'ID della rete e della zona DNS
+network = pstack.networking.get_network(name=config.require("network_name"))
+tenant_name = config_values.get("openstack:tenantName", "")
+zone_name = f"{tenant_name}."
+zone = pstack.dns.get_dns_zone(name=zone_name)
 
-instance_props = resources['instance']
+# Esporta il nome della zona
+pulumi.export(zone_name, zone.name)
 
-# Recupera l'ID della rete esistente
-networkName = config.require("network_name")
-network = pstack.networking.get_network(name=networkName)
-
-
-tenantName = config_values.get("openstack:tenantName")
-zoneName = f"{tenantName}."
-zone = pstack.dns.get_dns_zone(name=zoneName)
-pulumi.export(zoneName, zone.name)
-    
+# Connessione OpenStack
 username=config_values.get("openstack:userName")
 password=config_values.get("openstack:password")
 tenant=config_values.get("openstack:tenantName")
 auth_url=config_values.get("openstack:auth_url")
+
+#auth_details = {
+#    "username": config_values.get("openstack:userName"),
+#    "password": config_values.get("openstack:password"),
+#    "tenant": tenant_name,
+#    "auth_url": config_values.get("openstack:auth_url")
+#}
 

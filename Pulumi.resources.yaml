@@ -1,22 +1,22 @@
 resources:
   instance:
-    db: 
-      name: db_pulumi
-      flavor: m1.tiny
-      image: debian
-      vmCount: 0
-      keyPair: "kollaJump_ecdsa"
-   
-    web:
-      name: web_pulumi
-      flavor: m1.tiny
-      image: debian
-      vmCount: 0
-      keyPair: "kollaJump_ecdsa"
-
+#    db: 
+#      name: db_pulumi
+#      flavor: m1.tiny
+#      image: debian
+#      vmCount: 0
+#      keyPair: "kollaJump_ecdsa"
+#   
+#    web:
+#      name: web_pulumi
+#      flavor: m1.tiny
+#      image: debian
+#      vmCount: 0
+#      keyPair: "kollaJump_ecdsa"
+#
     custom:
-      name: custom
-      flavor: m1.tiny
+      name: custom.compute01
+      flavor: m1.tiny.compute01
       image: debian
-      vmCount: 0
+      vmCount: 1
       keyPair: "kollaJump_ecdsa"

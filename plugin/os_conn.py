@@ -1,6 +1,5 @@
 import openstack as os_sdk
 
-
 def connection(auth_url, username, password, tenant):
     return os_sdk.connection.Connection(
         auth={

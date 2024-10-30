@@ -4,3 +4,4 @@ pulumi_openstack
 python-openstackclient
 python-designateclient
 python-novaclient
+osc-placement

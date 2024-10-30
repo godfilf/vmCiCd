@@ -1,25 +1,27 @@
 import pulumi_openstack as pstack
 
-def cd(conn, vmCount, instanceName, tenantName):  # cd sta per create delete, ovvero esegue tutte e due le funzioni
-    sg = create(vmCount, instanceName, tenantName)
-    delete(conn, vmCount, instanceName, tenantName)
-    return sg
-
-def create(vmCount, instanceName, tenantName):
-    ## Creo il server group 
+def cd(conn, vmCount, instanceName, tenantName):
+    """Crea o elimina il server group in base al valore di vmCount."""
+    server_group_name = f"{instanceName}.{tenantName}"
+    
+    # Crea o elimina il server group in base al valore di vmCount
     if vmCount > 0:
-        server_group = pstack.compute.ServerGroup(f"{instanceName}.{tenantName}",
-            name=f"{instanceName}.{tenantName}",
-            policies="anti-affinity",
-            rules={
-                "max_server_per_host": 2,
-            }
-        )
-        return server_group
-    else:
-        return None
+        return create(server_group_name)
+    delete(conn, server_group_name)
+    return None
 
-def delete(conn, vmCount, instanceName, tenantName):
-    server_group_to_remove = conn.compute.find_server_group(f"{instanceName}.{tenantName}")
-    if server_group_to_remove is not None and vmCount == 0:
-        conn.compute.delete_server_group(server_group_to_remove.id)
+def create(server_group_name):
+    """Crea un ServerGroup con politiche di anti-affinity."""
+    return pstack.compute.ServerGroup(
+        resource_name=server_group_name,
+        name=server_group_name,
+        policies="anti-affinity",
+        rules={"max_server_per_host": 2}
+    )
+
+def delete(conn, server_group_name):
+    """Elimina un ServerGroup specificato se esiste."""
+    server_group = conn.compute.find_server_group(server_group_name)
+    if server_group:
+        conn.compute.delete_server_group(server_group.id)
+

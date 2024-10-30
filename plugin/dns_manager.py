@@ -1,36 +1,30 @@
 import openstack as os_sdk
 import plugin.os_conn as os_conn
 
-# Funzione per stabilire la connessione a OpenStack
+# Stabilisce la connessione a OpenStack
 def create_connection(auth_url, username, password, tenant):
     return os_conn.connection(auth_url, username, password, tenant)
 
-# Funzione per ottenere i recordset esistenti
-def get_existing_recordsets(conn, zone_id):
+# Ottiene tutti i recordset in una zona
+def get_recordsets(conn, zone_id):
     return list(conn.dns.recordsets(zone=zone_id))
 
-# Funzione per cancellare i recordset esistenti
-def delete_recordsets(conn, recordsets_to_delete):
-    for recordset in recordsets_to_delete:
+# Cancella i recordset specificati
+def delete_recordsets(conn, recordsets):
+    for recordset in recordsets:
         conn.dns.delete_recordset(recordset)
 
-# Funzione per gestire i recordset
+# Gestisce i recordset per ogni tipo di VM
 def manage_recordsets(conn, zone_id, instance_props):
-    existing_recordsets = get_existing_recordsets(conn, zone_id)
+    existing_recordsets = get_recordsets(conn, zone_id)
 
-    for vmType in instance_props.keys():
-        recordCount = 0
-        recIdToRemove = []
-        vmCount = instance_props[vmType].get("vmCount")
-        instanceName = instance_props[vmType].get("name")
+    for vmType, props in instance_props.items():
+        vm_count = props.get("vmCount", 0)
+        instance_name = props.get("name")
 
-        for recordset in existing_recordsets:
-            if instanceName in recordset.name:
-                recordCount += 1
+        # Filtra i recordset che corrispondono al nome dell'istanza
+        matching_recordsets = [r for r in existing_recordsets if instance_name in r.name]
 
-        for i in range(1, recordCount + 1):
-            if i >= vmCount:
-                for recLst in existing_recordsets:
-                    if f"{instanceName}-{i}" in recLst.name:
-                        delete_recordsets(conn, [recLst])  # Passa la connessione e il recordset da eliminare
-
+        # Trova i recordset in eccesso e cancellali
+        excess_recordsets = [r for i, r in enumerate(matching_recordsets, start=1) if i > vm_count]
+        delete_recordsets(conn, excess_recordsets)
