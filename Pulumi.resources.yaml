@@ -1,22 +1,31 @@
 resources:
   instance:
-#    db: 
-#      name: db_pulumi
-#      flavor: m1.tiny
-#      image: debian
-#      vmCount: 0
-#      keyPair: "kollaJump_ecdsa"
-#   
-#    web:
-#      name: web_pulumi
-#      flavor: m1.tiny
-#      image: debian
-#      vmCount: 0
-#      keyPair: "kollaJump_ecdsa"
-#
+    db: 
+      name: db_pulumi
+      flavor: m1.tiny
+      image: debian
+      vmCount: 1
+      keyPair: "kollaJump_ecdsa"
+   
+    web:
+      name: web_pulumi
+      flavor: m1.tiny
+      image: debian
+      vmCount: 0
+      keyPair: "kollaJump_ecdsa"
+
     custom:
-      name: custom.compute01
+      name: custom-compute01
       flavor: m1.tiny.compute01
       image: debian
       vmCount: 1
       keyPair: "kollaJump_ecdsa"
+      volumes: 
+      #  - description: "boot" # il primo volume deve essere sempre quello di boot
+      #    size: 10
+      #    type: ceph
+      #  - description: "se usi un disco esistente"
+      #    uuid: 526d9b36-78d3-4012-9adb-2c2523e6169e
+        - description: "disco Dati"
+          size: 12
+          type: ceph
