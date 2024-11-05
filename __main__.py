@@ -16,7 +16,10 @@ import plugin.volumes_manager as vols
 # importo tutte le var che ho creato, perchè il __main__.py era diventato illeggibile
 from plugin.globals import *
 
-#import plugin.port_manager
+# importo le funzioni per il router
+from plugin.network_manager import get_external_network_id
+from plugin.port_manager import create_port_without_fixed_ip
+from plugin.router_manager import create_router, attach_router_to_port
 
 # Connessione e configurazione
 conn = os_conn.connection(auth_url, username, password, tenant)
@@ -54,6 +57,22 @@ def create_instance(instanceName, flavor, image, network, server_group, i):
         opts=pulumi.ResourceOptions(depends_on=[server_group, port]),
         **optional_args
     )
+
+existing_router = conn.network.find_router(router_name)
+
+if not existing_router:
+    # 1. Ottieni l'ID della rete esterna
+    external_network_id = get_external_network_id(auth_url, username, password, tenant, network_ext)
+    # 2. Crea una porta senza IP fisso
+    port = create_port_without_fixed_ip(f"gateway_to.{network.name}", network.id)
+    # 3. Crea il router e connettiti alla rete esterna
+    router = create_router(router_name, external_network_id)
+    # 4. Connetti il router alla porta
+    router_interface = attach_router_to_port(router, port.id)
+else:
+    print(f"Router '{router_name}' esiste già con ID: {existing_router.id}")
+
+
 
 # Creazione delle istanze
 for vmType, props in instance_props.items():

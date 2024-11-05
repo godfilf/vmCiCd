@@ -6,3 +6,4 @@ config:
   openstack:tenantName: test.cluster-dev.ostack.cosmicnet
   openstack:region: RegionOne
   network_name: network.test.cluster-dev.ostack.cosmicnet
+  external_net: external.cluster-dev.ostack.cosmicnet

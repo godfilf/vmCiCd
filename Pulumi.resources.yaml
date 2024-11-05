@@ -58,7 +58,4 @@ resources:
       image: debian
       vmCount: 1
       keyPair: "kollaJump_ecdsa"
-      volumes:
-        - size: 12
-          description: "test senza boot vol"
 

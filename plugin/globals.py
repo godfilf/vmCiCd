@@ -17,9 +17,11 @@ instance_props = resources.get('instance', {})
 
 # Recupera l'ID della rete e della zona DNS
 network = pstack.networking.get_network(name=config.require("network_name"))
+network_ext = pstack.networking.get_network(name=config.require("external_net"))
 tenant_name = config_values.get("openstack:tenantName", "")
 zone_name = f"{tenant_name}."
 zone = pstack.dns.get_dns_zone(name=zone_name)
+router_name = f"router_to_external.{tenant_name}"
 
 # Esporta il nome della zona
 pulumi.export(zone_name, zone.name)
