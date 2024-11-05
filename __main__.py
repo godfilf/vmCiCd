@@ -10,7 +10,7 @@ import sys
 # importo dei moduli custom per la gestione di alcuni componenti openstack, i quali non sono tracciati da pulumi 
 import plugin.dns_manager as dns
 import plugin.os_conn as os_conn
-import plugin.sg_manager as sg
+import plugin.server_groups_manager as sg
 import plugin.volumes_manager as vols
 
 # importo tutte le var che ho creato, perchè il __main__.py era diventato illeggibile
@@ -29,7 +29,7 @@ def get_config_property(vmType, prop_name, default_value):
         return instance_props[vmType].get(prop_name) or config.require(prop_name)
     except pulumi.ConfigMissingError as e:
         if prop_name in {"keyPair", "volumes"}: return None
-        print(f"Errore: La configurazione '{prop_name}' è mancante per '{vmType}'. {e}")
+        print(f"Errore: La configurazione '{prop_name}' è mancante o errata per '{vmType}'. {e}")
         sys.exit(1)  # Termina il programma con un codice di uscita diverso da 0
 
 
@@ -70,68 +70,48 @@ for vmType, props in instance_props.items():
 
     # Configura i dispositivi per l'istanza
     block_devices = []
+    boot_index_counter = 1  
     for i, vol in enumerate(volumes.values()):
+        # Trova il vol_data corrispondente in volumes_data
+        vol_data_dict = volumes_data[i]
+        
+        # Determina se il volume corrente è bootable
+        is_bootable = vol_data_dict.get("bootable", False)
+
+        # Calcola il boot_index
+        if is_bootable:
+            boot_index = 0  # Solo un volume deve essere bootable
+        else:
+            boot_index = boot_index_counter
+            boot_index_counter += 1  # Incrementa il contatore per i volumi non bootable
+    
+
         # Verifica se il volume è esistente usando l'UUID
-        if hasattr(vol, 'name'):
+        if not hasattr(vol, 'name'):
             block_devices.append(
                 pstack.compute.InstanceBlockDeviceArgs(
                     source_type="volume",
-                    boot_index=0 if i == 0 else 1,
+                    #boot_index=0 if is_bootable else i + 1,
+                    boot_index=boot_index,
                     delete_on_termination=False,
                     destination_type="volume",
-                    uuid=vol.id  # Utilizza l'UUID del volume esistente
+                    uuid=vol["id"]  # Utilizza l'UUID del volume esistente
                 )
             )
         else:
             block_devices.append(
                 pstack.compute.InstanceBlockDeviceArgs(
                     source_type="volume",
-                    boot_index=0 if i == 0 else 1,  # Imposta boot_index a 0 solo per il primo volume (disco di avvio)
+                    boot_index=boot_index,
                     delete_on_termination=False,
                     destination_type="volume",
                     uuid=vol.id,
                     volume_size=vol.size,
                 )
             )
-    #        # Volume nuovo creato in Pulumi (disponibile in `volumes`)
-    #        vol_key = f"{instanceName}.vol-{i}.{tenant_name}"
-    #        vol = volumes.get(vol_key)
-    #        if vol:  # Assicurati che il volume sia stato creato
-    #            block_devices.append(
-    #                pstack.compute.InstanceBlockDeviceArgs(
-    #                    source_type="volume",
-    #                    boot_index=0 if i == 0 else 1,
-    #                    delete_on_termination=False,
-    #                    destination_type="volume",
-    #                    uuid=vol.id,
-    #                    volume_size=vol.size,
-    #                    volume_type=vol.volume_type
-    #                )
-    #            )
-
-
-#    block_devices = [
-#        pstack.compute.InstanceBlockDeviceArgs(
-#            source_type="volume",
-#            boot_index=0 if i == 0 else 1,  # Imposta boot_index a 0 solo per il primo volume (disco di avvio)
-#            delete_on_termination=False,
-#            destination_type="volume",
-#            uuid=vol.id,
-#            volume_size=vol.size,
-#            ##**({"volume_type": vol.volume_type} if not vol.get("existing") else {})
-#
-#            #uuid=vol["id"] if isinstance(vol, dict) and vol.get("existing") else vol.id,
-#            #volume_size=None if isinstance(vol, dict) and vol.get("existing") else vol.size,
-#
-#            #**({"volume_type": vol.volume_type} if not vol.get("existing") else {})  # Assicura che `volume_type` sia incluso solo per i nuovi volumi
-#            #**({"volume_type": vol.volume_type} if not isinstance(vol, dict) or not vol.get("existing") else {})
-#            #**({"volume_type": vol.volume_type} if not (isinstance(vol, dict) and vol.get("existing")) else {})  # Includi `volume_type` solo per volumi nuovi
-#            #**({} if isinstance(vol, dict) and vol.get("existing") else {"volume_type": vol.volume_type})
-#            #**({} if vol.get("existing") else {"volume_size": vol.size, "volume_type": vol.volume_type})
-#
-#        )
-#        for i, vol in enumerate(volumes.values())
-#    ]
+    # Debug: stampa il contenuto di block_devices
+    for bd in block_devices:
+        print(f"Block Device: UUID={bd.uuid}, Boot Index={bd.boot_index}")
 
     optional_components = {
         "key_pair": key_pair_name,

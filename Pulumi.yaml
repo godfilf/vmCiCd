@@ -1,3 +1,8 @@
+## INFO
+## Questo file può essere lasciato così, in quanto creaiamo le risorse con il file `Pulumi.resources.dev.yaml`
+## Da notare che la desinenza `dev` alla fine del file, dipende esclusivamente dallo stack sul quale si sta lavorando 
+## con pulumi. Se si crea uno stack di `pro` o `stg`, allora bisognerà sostituire `dev` con l'opportuno nome dello stack.
+##
 name: NewApp
 description: A minimal Python Pulumi program
 runtime:
