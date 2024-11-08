@@ -5,5 +5,7 @@ config:
   openstack:auth_url: http://10.10.10.99:5000
   openstack:tenantName: test.cluster-dev.ostack.cosmicnet
   openstack:region: RegionOne
-  network_name: network.test.cluster-dev.ostack.cosmicnet
   external_net: external.cluster-dev.ostack.cosmicnet
+  network_name: network.test.cluster-dev.ostack.cosmicnet
+  network_exist: False
+  vlan_tag: 100 # se non specificato, viene ignorato. altrimenti prende info dal file Pulumi.dev.yaml (dev dipende solo dal tipo di stack che si sta usando)
