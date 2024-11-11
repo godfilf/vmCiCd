@@ -10,17 +10,6 @@ def create_port_with_fixed_ip(auth_url, username, password, tenant, port_name, n
     conn = connection(auth_url, username, password, tenant)
     cidr = next((vlan["subnet"] for vlan in vlans_list if vlan["id"] == vlan_tag), "10.0.0.1/24")
     
-    #if network_exist:
-    #    # Recupera tutte le subnet e trova quella associata al network_id specificato
-    #    subnets = list(conn.network.subnets())  # Ottiene tutte le subnet disponibili
-    #    subnet = next((s for s in subnets if s.network_id == network.id), None)
-
-    # Se non c'è una subnet associata e `network_exist` è True, crea la subnet
-    #if subnet is None:
-    #    subnet = create_subnet(network_name, network.id, vlan_tag, tenant_name, cidr)
-    #    subnets = list(conn.network.subnets())  # Ottiene tutte le subnet disponibili
-    #    subnet = next((s for s in subnets if s.network_id == network.id), None)
-
     # Ottieni il prefisso dell'indirizzo IP della subnet
     ip_address = cidr.split('/')[0]
     ip_prefix = '.'.join(ip_address.split('.')[:3])

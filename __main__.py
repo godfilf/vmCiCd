@@ -46,7 +46,7 @@ def create_instance(instanceName, flavor, image, network, server_group, i):
         #networks=[{'uuid': network.id, 'name': network.name}],
         scheduler_hints=[{"group": server_group.id}],
         #opts=pulumi.ResourceOptions(depends_on=[server_group]),
-        opts=pulumi.ResourceOptions(depends_on=[server_group, instance_port]),
+        opts=pulumi.ResourceOptions(depends_on=[network, server_group, instance_port]),
         **optional_args
     )
 
