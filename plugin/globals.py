@@ -40,13 +40,13 @@ vlans_list = config.get_object("vlans")
 
 vlans = [f"VLAN_ID: {vlan['id']} - Subnet: {vlan['subnet']}" for vlan in vlans_list] if vlans_list else ["No VLANs configured"]
 #network_exist = config_values.get("network_exist", "False")
-network_exist = config.get_bool("network_exist")
+router_exist = config.get_bool("router_exist")
 
 #network = pstack.networking.get_network(name=config.require("network_name"))
 network_name = config.require("network_name")
 
-#network = pstack.networking.get_network(name=config.require("network_name"))
-network, subnet = network_mgr.manage_network(auth_url, username, password, tenant, network_exist, network_name, vlans_list, vlan_tag, tenant_name, zone_name, config)
+print("Creo la rete")
+network, subnet = network_mgr.manage_network(auth_url, username, password, tenant, router_exist, network_name, vlans_list, vlan_tag, tenant_name, zone_name, config)
 
 network_ext = pstack.networking.get_network(name=config.require("external_net"))
 
@@ -54,9 +54,6 @@ network_ext = pstack.networking.get_network(name=config.require("external_net"))
 
 
 # ######################### BLOCCO STAMPA VARIABILI 
-# Stampa tutte le configurazioni per verifica (può essere rimosso in produzione)
-#for key, value in config_values.items():
-#    print(f"Key: {key}, Value: {value}")
 # Calcola la larghezza massima delle chiavi per una formattazione uniforme
 max_key_length = max(len(key) for key in config_values.keys())
 
@@ -79,12 +76,6 @@ for vlan in vlans_list:
     vlan_id = str(vlan.get("id", "N/A"))
     subnets = vlan.get("subnet", "N/A")
     print(f"{vlan_id.ljust(10)} : {subnets}")
-
-#pulumi.export("Global Vars", [
-#    f"Tenant Network: {network.name} - {network.id}",
-#    f"External Network: {network_ext.name} - {network_ext.id}",
-#    f"Zone: {zone.name} - {zone.id}"
-#] + vlans)
 
 
 

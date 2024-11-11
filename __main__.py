@@ -21,10 +21,7 @@ import plugin.network_manager as network_mgr
 from plugin.port_manager import *
 from plugin.router_manager import create_router, attach_router_to_port
 
-# Connessione e configurazione
-conn = os_conn.connection(auth_url, username, password, tenant)
-dns.manage_recordsets(conn, zone.id, instance_props)
-
+print("Ho finito l'import di tutti moduli, compreso globals.py")
 # Funzione per ottenere una proprietà configurata
 def get_config_property(vmType, prop_name, default_value):
     try:
@@ -37,43 +34,45 @@ def get_config_property(vmType, prop_name, default_value):
 
 # Funzione per creare un'istanza
 def create_instance(instanceName, flavor, image, network, server_group, i):
-    port = pstack.networking.Port(
-        f"{instanceName}-{i}.port.{network_name}",
-        name=f"{instanceName}.port.{network_name}",
-        network_id=network.id,
-        admin_state_up=True,
-        no_security_groups=True,
-        port_security_enabled=False
-    )
+    instance_port = create_port_without_fixed_ip(f"{instanceName}-port-{i}.{tenant_name}", network.id, subnet.id)
 
+    print(f"Creo l'istanza {instanceName}-{i}")
     return pstack.compute.Instance(
         f"{instanceName}-{i}",
         name=f"{instanceName}-{i}",
         flavor_name=flavor,
         image_name=image,
-        networks=[{'uuid': network.id, 'name': network.name, 'port': port.id}],
+        networks=[{'uuid': network.id, 'name': network.name, 'port': instance_port.id}],
+        #networks=[{'uuid': network.id, 'name': network.name}],
         scheduler_hints=[{"group": server_group.id}],
-        opts=pulumi.ResourceOptions(depends_on=[server_group, port]),
+        #opts=pulumi.ResourceOptions(depends_on=[server_group]),
+        opts=pulumi.ResourceOptions(depends_on=[server_group, instance_port]),
         **optional_args
     )
 
 
+# Connessione e configurazione
+conn = os_conn.connection(auth_url, username, password, tenant)
+dns.manage_recordsets(conn, zone.id, instance_props)
 existing_router = conn.network.find_router(router_name)
 
-if not existing_router:
-    # 1. Ottieni l'ID della rete esterna
-    external_network_id = network_mgr.get_network_id(auth_url, username, password, tenant, network_ext.name)
-    # 2. Crea una porta senza IP fisso
-    router_port = create_port_with_fixed_ip(auth_url, username, password, tenant, f"gateway_to_external.{network_name}", network, subnet)
-    # 3. Crea il router e connettiti alla rete esterna
-    router = create_router(router_name, external_network_id)
-    # 4. Connetti il router alla porta
-    router_interface = attach_router_to_port(router, router_port)
-    pulumi.export("router_interface_id", router_interface.id)
-    #await router_interface.id
-
-else:
-    print(f"Router '{router_name}' esiste già con ID: {existing_router.id}")
+if not router_exist:
+    print(f"Impostato il non utilizzo di un Virtual Router : router_exist = {router_exist}")
+    if not existing_router:
+        print(f"Non esiste un router to external. Lo creo: router_to_external = {router_name}")
+        # 1. Ottieni l'ID della rete esterna
+        external_network_id = network_mgr.get_network_id(auth_url, username, password, tenant, network_ext.name)
+        # 2. Crea una porta senza IP fisso
+        router_port = create_port_with_fixed_ip(auth_url, username, password, tenant, f"gateway_to_external.{network_name}", network, subnet)
+        # 3. Crea il router e connettiti alla rete esterna
+        router = create_router(router_name, external_network_id)
+        # 4. Connetti il router alla porta
+        router_interface = attach_router_to_port(router, router_port)
+        pulumi.export("router_interface_id", router_interface.id)
+        #await router_interface.id
+    
+    else:
+        print(f"Router '{router_name}' esiste già con ID: {existing_router.id}")
 
 # Creazione delle istanze
 for vmType, props in instance_props.items():

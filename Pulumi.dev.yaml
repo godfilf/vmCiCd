@@ -7,5 +7,5 @@ config:
   openstack:region: RegionOne
   external_net: external.cluster-dev.ostack.cosmicnet
   network_name: network.test.cluster-dev.ostack.cosmicnet
-  network_exist: False
+  router_exist: True  # Se a True, Utilizza come Def GW l'ip 1 della vlan. Se a False crea un router con GW 2
   vlan_tag: 100 # se non specificato, viene ignorato. altrimenti prende info dal file Pulumi.dev.yaml (dev dipende solo dal tipo di stack che si sta usando)
