@@ -56,6 +56,6 @@ resources:
       name: web_pulumi
       flavor: m1.tiny
       image: debian
-      vmCount: 0
+      vmCount: 1
       keyPair: "kollaJump_ecdsa"
 

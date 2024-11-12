@@ -7,14 +7,14 @@ import openstack as os_sdk
 import yaml
 import sys
 
+# importo tutte le var che ho creato, perchè il __main__.py era diventato illeggibile
+from plugin.globals import *
+
 # importo dei moduli custom per la gestione di alcuni componenti openstack, i quali non sono tracciati da pulumi 
 import plugin.dns_manager as dns
 import plugin.os_conn as os_conn
 import plugin.server_groups_manager as sg
 import plugin.volumes_manager as vols
-
-# importo tutte le var che ho creato, perchè il __main__.py era diventato illeggibile
-from plugin.globals import *
 
 # importo le funzioni per il router
 import plugin.network_manager as network_mgr 
@@ -36,7 +36,6 @@ def get_config_property(vmType, prop_name, default_value):
 def create_instance(instanceName, flavor, image, network, server_group, i):
     instance_port = create_port_without_fixed_ip(f"{instanceName}-port-{i}.{tenant_name}", network.id, subnet.id)
 
-    print(f"Creo l'istanza {instanceName}-{i}")
     return pstack.compute.Instance(
         f"{instanceName}-{i}",
         name=f"{instanceName}-{i}",

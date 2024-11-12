@@ -46,9 +46,10 @@ router_exist = config.get_bool("router_exist")
 #network = pstack.networking.get_network(name=config.require("network_name"))
 network_name = config.require("network_name")
 
-print("Creo la rete")
-#network, subnet = network_mgr.manage_network(auth_url, username, password, tenant, router_exist, network_name, vlans_list, vlan_tag, tenant_name, zone_name, config)
 
+
+
+# ################ CREAZIONE RETE DI PROGETTO
 conn = connection(auth_url, username, password, tenant)
 # Default VLAN CIDR
 vlan_cidr = "10.0.0.0/24"
@@ -66,30 +67,23 @@ else:
 
 
 def get_or_create_subnet(network_id):
-    # Ottieni le subnet associate alla rete specificata
     subnets = conn.network.subnets(network_id=network_id)
-    # Trova la subnet con il CIDR specificato, se esiste
     vlan_subnet = next((sn for sn in subnets if sn.cidr == vlan_cidr), None)
 
     if not vlan_subnet:
-        # Se la subnet non esiste, la crea
-        vlan_subnet = create_subnet(router_exist, network_name, network.id, vlan_tag, tenant_name, vlan_cidr)
-    return vlan_subnet
+        return create_subnet(router_exist, network_name, network_id, vlan_tag, tenant_name, vlan_cidr)
+    else:
+        existing_subnet = conn.network.find_subnet(vlan_subnet.id)
+        return pstack.networking.Subnet.get(existing_subnet.name, existing_subnet.id)
 
-# Usa `apply` se `network.id` è un Output; altrimenti esegui direttamente
-if isinstance(network.id, pulumi.Output):
-    subnet = network.id.apply(get_or_create_subnet)
-else:
-    print("sono nel cao non output della subnet")
-    exit()
-    subnet = get_or_create_subnet(network.id)
-
-
-#subnet = create_subnet(router_exist, network_name, network.id, vlan_tag, tenant_name, vlan_cidr)
-
+#if isinstance(network.id, pulumi.Output):
+subnet = network.id.apply(lambda id: get_or_create_subnet(id))
+#else:
+#    subnet = get_or_create_subnet(existing_network.id)
 
 
 network_ext = pstack.networking.get_network(name=config.require("external_net"))
+
 
 
 
