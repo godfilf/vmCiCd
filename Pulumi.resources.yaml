@@ -53,7 +53,7 @@ resources:
       # se non specificato crea un disco ephemeral
    
     web:
-      name: web
+      name: web_pulumi
       flavor: m1.tiny
       image: debian
       vmCount: 1

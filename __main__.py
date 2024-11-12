@@ -57,6 +57,7 @@ dns.manage_recordsets(conn, zone.id, instance_props)
 existing_router = conn.network.find_router(router_name)
 
 #if not router_exist:
+router = None
 if not router_exist and (network_ext is not None or not network_ext):
     print(f"Impostato il non utilizzo di un Virtual Router : router_exist = {router_exist}")
     if not existing_router:
@@ -149,5 +150,5 @@ for vmType, props in instance_props.items():
     #pulumi.export("instances", instances)
     #pulumi.export("network", network)
     #pulumi.export("subnet", subnet)
-    pulumi.export("router", router)
+    pulumi.export("router", router) if router else None
 

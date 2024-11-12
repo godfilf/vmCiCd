@@ -8,5 +8,5 @@ config:
   external_net: external.cluster-dev.ostack.cosmicnet       # La External Network DEVE esistere, perchè non viene creata da questa APP. Ma può essere None type o non definita.
                                                             # Dunque se None o non definita, anche se router_exist: True, il router to external non viene creato
   network_name: network.test.cluster-dev.ostack.cosmicnet   #
-  router_exist: False                                        # Se a True, Utilizza come Def GW l'ip 1 della vlan. Se a False crea un router con GW 2
+  router_exist: False                                       # Se a True, Utilizza come Def GW l'ip 1 della vlan. Se a False crea un router con GW 2
   vlan_tag: 101                                             # se non specificato, viene ignorato. altrimenti prende info dal file Pulumi.dev.yaml (dev dipende solo dal tipo di stack che si sta usando)
