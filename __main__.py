@@ -22,6 +22,8 @@ from plugin.network_manager import get_network_id
 from plugin.port_manager import *
 from plugin.router_manager import create_router, attach_router_to_port
 
+from plugin.instance_manager import create_instance
+
 print("Ho finito l'import di tutti moduli, compreso globals.py")
 # Funzione per ottenere una proprietà configurata
 def get_config_property(vmType, prop_name, default_value):
@@ -31,24 +33,6 @@ def get_config_property(vmType, prop_name, default_value):
         if prop_name in {"keyPair", "volumes"}: return None
         print(f"Errore: La configurazione '{prop_name}' è mancante o errata per '{vmType}'. {e}")
         sys.exit(1)  # Termina il programma con un codice di uscita diverso da 0
-
-
-# Funzione per creare un'istanza
-def create_instance(instanceName, flavor, image, network, server_group, i):
-    instance_port = create_port_without_fixed_ip(f"{instanceName}-port-{i}.{tenant_name}", network.id, subnet.id)
-
-    return pstack.compute.Instance(
-        f"{instanceName}-{i}",
-        name=f"{instanceName}-{i}",
-        flavor_name=flavor,
-        image_name=image,
-        networks=[{'uuid': network.id, 'name': network.name, 'port': instance_port.id}],
-        #networks=[{'uuid': network.id, 'name': network.name}],
-        scheduler_hints=[{"group": server_group.id}],
-        #opts=pulumi.ResourceOptions(depends_on=[server_group]),
-        opts=pulumi.ResourceOptions(depends_on=[network, server_group, instance_port]),
-        **optional_args
-    )
 
 
 # Connessione e configurazione
@@ -144,7 +128,7 @@ for vmType, props in instance_props.items():
             optional_args[key] = value
     
     server_group = sg.cd(conn, vmCount, instanceName, tenant_name)
-    instances = [create_instance(instanceName, flavor, image, network, server_group, i) for i in range(vmCount)]
+    instances = [create_instance(instanceName, flavor, image, network, server_group, optional_args, i) for i in range(vmCount)]
 
     #pulumi.export("instances", instances)
     #pulumi.export("network", network)
