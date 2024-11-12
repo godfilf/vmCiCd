@@ -54,17 +54,6 @@ if vlan_tag and vlans_list:
 
 
 
-## ################ CREAZIONE RETE DI PROGETTO
-    
-#
-#network, subnet = manage_network(auth_url, username, password, tenant, router_exist, network_name, vlans_list, vlan_tag, tenant_name, zone_name, config)
-#
-#network_ext = pstack.networking.get_network(name=config.require("external_net"))
-
-
-
-
-
 # ######################### BLOCCO STAMPA VARIABILI 
 # Calcola la larghezza massima delle chiavi per una formattazione uniforme
 max_key_length = max(len(key) for key in config_values.keys())

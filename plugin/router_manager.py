@@ -4,7 +4,7 @@ def create_router(router_name, external_network_id):
     # Crea il router connesso alla rete esterna
     router = pstack.networking.Router(
         resource_name=router_name,
-        admin_state_up=True,  # Attiva il router
+        admin_state_up=True,                     # Attiva il router
         external_network_id=external_network_id  # ID della rete esterna
     )
     return router

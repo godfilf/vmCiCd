@@ -18,7 +18,7 @@ import plugin.server_groups_manager as sg
 import plugin.volumes_manager as vols
 
 # importo le funzioni per il router
-import plugin.network_manager as network_mgr 
+from plugin.network_manager import get_network_id
 from plugin.port_manager import *
 from plugin.router_manager import create_router, attach_router_to_port
 
@@ -56,12 +56,13 @@ conn = os_conn.connection(auth_url, username, password, tenant)
 dns.manage_recordsets(conn, zone.id, instance_props)
 existing_router = conn.network.find_router(router_name)
 
-if not router_exist:
+#if not router_exist:
+if not router_exist and (network_ext is not None or not network_ext):
     print(f"Impostato il non utilizzo di un Virtual Router : router_exist = {router_exist}")
     if not existing_router:
         print(f"Non esiste un router to external. Lo creo: router_to_external = {router_name}")
         # 1. Ottieni l'ID della rete esterna
-        external_network_id = network_mgr.get_network_id(auth_url, username, password, tenant, network_ext.name)
+        external_network_id = get_network_id(auth_url, username, password, tenant, network_ext.name)
         # 2. Crea una porta senza IP fisso
         router_port = create_port_with_fixed_ip(auth_url, username, password, tenant, f"gateway_to_external.{network_name}", network, subnet)
         # 3. Crea il router e connettiti alla rete esterna
@@ -145,7 +146,8 @@ for vmType, props in instance_props.items():
     server_group = sg.cd(conn, vmCount, instanceName, tenant_name)
     instances = [create_instance(instanceName, flavor, image, network, server_group, i) for i in range(vmCount)]
 
-    pulumi.export("instances", instances)
-    pulumi.export("network", network)
-    pulumi.export("subnet", subnet)
+    #pulumi.export("instances", instances)
+    #pulumi.export("network", network)
+    #pulumi.export("subnet", subnet)
+    pulumi.export("router", router)
 

@@ -9,8 +9,6 @@ from types import SimpleNamespace
 conn = connection(auth_url, username, password, tenant)
 
 def get_network_id(auth_url, username, password, tenant, network_name):
-    # Connessione a OpenStack
-    conn = connection(auth_url, username, password, tenant)
 
     # Trova la rete con il nome specificato
     net = conn.network.find_network(network_name)
@@ -22,8 +20,7 @@ def get_network_id(auth_url, username, password, tenant, network_name):
     return net.id
 
 
-#def manage_network(auth_url, username, password, tenant, router_exist, network_name, vlans_list, vlan_tag, tenant_name, zone_name, config):
-def manage_network():
+def get_or_create_network():
     existing_network = conn.network.find_network(network_name)
     
     if not existing_network:
