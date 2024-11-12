@@ -1,10 +1,6 @@
 import openstack as os_sdk
 import plugin.os_conn as os_conn
 
-# Stabilisce la connessione a OpenStack
-def create_connection(auth_url, username, password, tenant):
-    return os_conn.connection(auth_url, username, password, tenant)
-
 # Ottiene tutti i recordset in una zona
 def get_recordsets(conn, zone_id):
     return list(conn.dns.recordsets(zone=zone_id))

@@ -9,6 +9,7 @@ import sys
 
 # importo tutte le var che ho creato, perchè il __main__.py era diventato illeggibile
 from plugin.globals import *
+from plugin.define_network_global_vars import *
 
 # importo dei moduli custom per la gestione di alcuni componenti openstack, i quali non sono tracciati da pulumi 
 import plugin.dns_manager as dns
@@ -67,7 +68,7 @@ if not router_exist:
         router = create_router(router_name, external_network_id)
         # 4. Connetti il router alla porta
         router_interface = attach_router_to_port(router, router_port)
-        pulumi.export("router_interface_id", router_interface.id)
+        pulumi.export("router_interface_id", router_interface)
         #await router_interface.id
     
     else:
@@ -144,4 +145,7 @@ for vmType, props in instance_props.items():
     server_group = sg.cd(conn, vmCount, instanceName, tenant_name)
     instances = [create_instance(instanceName, flavor, image, network, server_group, i) for i in range(vmCount)]
 
+    pulumi.export("instances", instances)
+    pulumi.export("network", network)
+    pulumi.export("subnet", subnet)
 

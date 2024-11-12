@@ -8,13 +8,13 @@ def create_port_with_fixed_ip(auth_url, username, password, tenant, port_name, n
     print("Sto creando una porta con IP Fisso")
     # Crea una connessione
     conn = connection(auth_url, username, password, tenant)
-    cidr = next((vlan["subnet"] for vlan in vlans_list if vlan["id"] == vlan_tag), "10.0.0.1/24")
+    cidr = next((vlan["subnet"] for vlan in vlans_list if vlan["id"] == vlan_tag), "10.0.0.0/24")
     
     # Ottieni il prefisso dell'indirizzo IP della subnet
     ip_address = cidr.split('/')[0]
     ip_prefix = '.'.join(ip_address.split('.')[:3])
     #ip_prefix = cidr.rsplit('.', 1)[0]  # Prende il prefisso fino al terzo ottetto
-    desired_ip = f"{ip_prefix}.4"  # Imposta l'IP desiderato come xxx.yyy.zzz.2
+    desired_ip = f"{ip_prefix}.2"  # Imposta l'IP desiderato come xxx.yyy.zzz.2
 
     # Crea una porta con un IP fisso specificato
     return pstack.networking.Port(

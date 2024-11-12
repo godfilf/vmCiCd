@@ -1,7 +1,6 @@
 import yaml
 import pulumi
 import pulumi_openstack as pstack
-from plugin.network_manager import *
 from plugin.os_conn import connection
 
 # ######################### BLOCCO CARICAMENTO CONFIGURAZIONI
@@ -46,43 +45,21 @@ router_exist = config.get_bool("router_exist")
 #network = pstack.networking.get_network(name=config.require("network_name"))
 network_name = config.require("network_name")
 
-
-
-
-# ################ CREAZIONE RETE DI PROGETTO
-conn = connection(auth_url, username, password, tenant)
 # Default VLAN CIDR
-vlan_cidr = "10.0.0.0/24"
-
+#vlan_cidr = "10.0.0.0/24"
 if vlan_tag and vlans_list:
     # Cerca vlan_cidr corrispondente al vlan_tag
-    vlan_cidr = next((vlan["subnet"] for vlan in vlans_list if vlan["id"] == vlan_tag), vlan_cidr)
-
-existing_network = conn.network.find_network(network_name)
-
-if not existing_network:
-    network = create_network(network_name, tenant_name, vlan_tag, zone_name)
-else:
-    network = pstack.networking.Network.get(network_name, existing_network.id)
+    vlan_cidr = next((vlan["subnet"] for vlan in vlans_list if vlan["id"] == vlan_tag), "10.0.0.0/24")
 
 
-def get_or_create_subnet(network_id):
-    subnets = conn.network.subnets(network_id=network_id)
-    vlan_subnet = next((sn for sn in subnets if sn.cidr == vlan_cidr), None)
-
-    if not vlan_subnet:
-        return create_subnet(router_exist, network_name, network_id, vlan_tag, tenant_name, vlan_cidr)
-    else:
-        existing_subnet = conn.network.find_subnet(vlan_subnet.id)
-        return pstack.networking.Subnet.get(existing_subnet.name, existing_subnet.id)
-
-#if isinstance(network.id, pulumi.Output):
-subnet = network.id.apply(lambda id: get_or_create_subnet(id))
-#else:
-#    subnet = get_or_create_subnet(existing_network.id)
 
 
-network_ext = pstack.networking.get_network(name=config.require("external_net"))
+## ################ CREAZIONE RETE DI PROGETTO
+    
+#
+#network, subnet = manage_network(auth_url, username, password, tenant, router_exist, network_name, vlans_list, vlan_tag, tenant_name, zone_name, config)
+#
+#network_ext = pstack.networking.get_network(name=config.require("external_net"))
 
 
 

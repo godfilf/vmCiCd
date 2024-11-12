@@ -48,12 +48,12 @@ resources:
       name: db_pulumi
       flavor: m1.tiny
       image: debian
-      vmCount: 1
+      vmCount: 0
       keyPair: "kollaJump_ecdsa"
       # se non specificato crea un disco ephemeral
    
     web:
-      name: web_pulumi
+      name: web
       flavor: m1.tiny
       image: debian
       vmCount: 1
