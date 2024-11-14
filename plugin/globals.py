@@ -2,6 +2,8 @@ import yaml
 import pulumi
 import pulumi_openstack as pstack
 from plugin.os_conn import connection
+from plugin.network_manager import get_network_id 
+from plugin.router_manager import create_router
 
 # ######################### BLOCCO CARICAMENTO CONFIGURAZIONI
 # Carica la configurazione e le variabili di ambiente
@@ -17,6 +19,7 @@ username=config_values.get("openstack:userName")
 password=config_values.get("openstack:password")
 tenant=config_values.get("openstack:tenantName")
 auth_url=config_values.get("openstack:auth_url")
+conn = connection(auth_url, username, password, tenant)
 
 # Carica le risorse dal file YAML e ottieni le proprietà dell'istanza
 with open('Pulumi.resources.yaml', 'r') as yaml_file:
@@ -27,7 +30,6 @@ tenant_name = config_values.get("openstack:tenantName", "")
 zone_name = f"{tenant_name}."
 zone = pstack.dns.get_dns_zone(name=zone_name)
 
-router_name = f"router_to_external.{tenant_name}"
 
 
 
@@ -39,18 +41,36 @@ vlan_tag = int(config.get("vlan_tag", 1))
 vlans_list = config.get_object("vlans")
 
 vlans = [f"VLAN_ID: {vlan['id']} - Subnet: {vlan['subnet']}" for vlan in vlans_list] if vlans_list else ["No VLANs configured"]
-#network_exist = config_values.get("network_exist", "False")
-router_exist = config.get_bool("router_exist")
-
-#network = pstack.networking.get_network(name=config.require("network_name"))
-network_name = config.require("network_name")
 
 # Default VLAN CIDR
-#vlan_cidr = "10.0.0.0/24"
 if vlan_tag and vlans_list:
     # Cerca vlan_cidr corrispondente al vlan_tag
     vlan_cidr = next((vlan["subnet"] for vlan in vlans_list if vlan["id"] == vlan_tag), "10.0.0.0/24")
 
+network_name = config.require("network_name")
+network_ext = pstack.networking.get_network(name=config.require("external_net"))
+external_network_id = get_network_id(auth_url, username, password, tenant, network_ext.name)
+
+
+
+
+router_name = f"router_to_external.{tenant_name}"
+router_exist = config.get_bool("router_exist")
+existing_router = conn.network.find_router(router_name)
+
+if not router_exist and (network_ext is not None or not network_ext):
+    print(f"Impostato il non utilizzo di un Virtual Router : router_exist = {router_exist}")
+    if not existing_router:
+        router = create_router(router_name, external_network_id)
+    else:
+        router = pstack.networking.Router(
+            resource_name=router_name,
+            admin_state_up=True,                     # Attiva il router 
+            opts=pulumi.ResourceOptions(import_=existing_router.id),
+            external_network_id=external_network_id  # ID della rete esterna
+        )
+
+        
 
 
 

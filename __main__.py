@@ -4,7 +4,6 @@ import pulumi
 import pulumi.runtime
 import pulumi_openstack as pstack
 import openstack as os_sdk
-import yaml
 import sys
 
 # importo tutte le var che ho creato, perchè il __main__.py era diventato illeggibile
@@ -13,18 +12,13 @@ from plugin.define_network_global_vars import *
 
 # importo dei moduli custom per la gestione di alcuni componenti openstack, i quali non sono tracciati da pulumi 
 import plugin.dns_manager as dns
-import plugin.os_conn as os_conn
 import plugin.server_groups_manager as sg
 import plugin.volumes_manager as vols
 
 # importo le funzioni per il router
-from plugin.network_manager import get_network_id
-from plugin.port_manager import *
-from plugin.router_manager import create_router, attach_router_to_port
 
 from plugin.instance_manager import create_instance
 
-print("Ho finito l'import di tutti moduli, compreso globals.py")
 # Funzione per ottenere una proprietà configurata
 def get_config_property(vmType, prop_name, default_value):
     try:
@@ -36,28 +30,22 @@ def get_config_property(vmType, prop_name, default_value):
 
 
 # Connessione e configurazione
-conn = os_conn.connection(auth_url, username, password, tenant)
 dns.manage_recordsets(conn, zone.id, instance_props)
-existing_router = conn.network.find_router(router_name)
 
 #if not router_exist:
-if not router_exist and (network_ext is not None or not network_ext):
-    print(f"Impostato il non utilizzo di un Virtual Router : router_exist = {router_exist}")
-    if not existing_router:
-        print(f"Non esiste un router to external. Lo creo: router_to_external = {router_name}")
-        # 1. Ottieni l'ID della rete esterna
-        external_network_id = get_network_id(auth_url, username, password, tenant, network_ext.name)
-        # 2. Crea una porta senza IP fisso
-        router_port = create_port_with_fixed_ip(auth_url, username, password, tenant, f"gateway_to_external.{network_name}", network, subnet)
-        # 3. Crea il router e connettiti alla rete esterna
-        router = create_router(router_name, external_network_id)
-        # 4. Connetti il router alla porta
-        router_interface = attach_router_to_port(router, router_port)
-        pulumi.export("router_interface_id", router_interface)
-        #await router_interface.id
-    
-    else:
-        print(f"Router '{router_name}' esiste già con ID: {existing_router.id}")
+#if not router_exist and (network_ext is not None or not network_ext):
+#    print(f"Impostato il non utilizzo di un Virtual Router : router_exist = {router_exist}")
+#    if not existing_router:
+#        print(f"Non esiste un router to external. Lo creo: router_to_external = {router_name}")
+#        # 2. Crea una porta senza IP fisso
+#        router_port = create_port_with_fixed_ip(auth_url, username, password, tenant, f"gateway_to_external.{network_name}", network, subnet)
+#        # 4. Connetti il router alla porta
+#        router_interface = attach_router_to_port(router, router_port)
+#        pulumi.export("router_interface_id", router_interface)
+#        #await router_interface.id
+#    
+#    else:
+#        print(f"Router '{router_name}' esiste già con ID: {existing_router.id}")
 
 # Creazione delle istanze
 for vmType, props in instance_props.items():
@@ -133,5 +121,5 @@ for vmType, props in instance_props.items():
     #pulumi.export("instances", instances)
     #pulumi.export("network", network)
     #pulumi.export("subnet", subnet)
-    pulumi.export("router", router)
+    #pulumi.export("router", router)
 

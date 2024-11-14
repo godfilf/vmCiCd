@@ -4,19 +4,14 @@ import openstack as os_sdk
 import ipaddress
 import pulumi_openstack as pstack
 from plugin.os_conn import connection
-from types import SimpleNamespace
-
-conn = connection(auth_url, username, password, tenant)
 
 def get_network_id(auth_url, username, password, tenant, network_name):
+    conn = connection(auth_url, username, password, tenant)
 
-    # Trova la rete con il nome specificato
     net = conn.network.find_network(network_name)
     if net is None:
-        # Se la rete non esiste, solleva un errore
         raise ValueError(f"Rete con nome '{network_name}' non trovata.")
     
-    # Restituisce l'ID della rete
     return net.id
 
 
@@ -76,7 +71,6 @@ def create_subnet(router_exist, network_name, network_id, vlan_tag, tenant_name,
 
     pool_end = str(subnet_cidr.network_address + 253)
 
-    # Crea una nuova subnet associata alla rete
     subnet = pstack.networking.Subnet(
         resource_name=subnet_name,
         name=subnet_name,

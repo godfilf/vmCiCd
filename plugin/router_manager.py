@@ -1,3 +1,4 @@
+import pulumi
 import pulumi_openstack as pstack
 
 def create_router(router_name, external_network_id):
@@ -14,6 +15,7 @@ def attach_router_to_port(router, port):
     router_interface = pstack.networking.RouterInterface(
         resource_name="router-interface",
         router_id=router.id,
+        opts=pulumi.ResourceOptions(depends_on=[router, port]),
         port_id=port.id  # Usa l'ID della porta creata in precedenza
     )
     return router_interface

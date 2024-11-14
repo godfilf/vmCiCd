@@ -1,10 +1,9 @@
+from plugin.globals import *
 import pulumi_openstack as pstack
 import plugin.os_conn as os_conn
 
-from plugin.globals import *
 
 def get_image_id(image_name):
-    conn = os_conn.connection(auth_url, username, password, tenant)
     image = conn.compute.find_image(image_name)
     if image:
         return image.id
