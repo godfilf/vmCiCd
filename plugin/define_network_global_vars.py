@@ -9,6 +9,7 @@ import pulumi.runtime
 
 if router_exist:
     ports = conn.network.ports()
+
     port_to_delete = next((port for port in ports if port.name == router_port_name), None)
 
     if port_to_delete:
@@ -16,7 +17,14 @@ if router_exist:
         conn.network.delete_port(port_to_delete)
 
     if existing_router:
-        conn.network.delete_router(existing_router)
+        router_ports = list(conn.network.ports(device_id=existing_router.id))
+        router = import_existing_router(router_name, existing_router, external_network_id)
+        user_ports = [
+            port for port in router_ports
+            if port.device_owner not in ('network:router_gateway', 'network:router_interface')
+        ]
+        if len(user_ports) == 0:
+            conn.network.delete_router(existing_router)
 
 
 network = create_network(network_name, tenant_name, vlan_tag, zone_name)
