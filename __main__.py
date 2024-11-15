@@ -118,6 +118,7 @@ for vmType, props in instance_props.items():
     server_group = sg.cd(conn, vmCount, instanceName, tenant_name)
     instances = [create_instance(instanceName, flavor, image, network, server_group, optional_args, i) for i in range(vmCount)]
 
+    
     #pulumi.export("instances", instances)
     #pulumi.export("network", network)
     #pulumi.export("subnet", subnet)

@@ -1,4 +1,4 @@
-from plugin.globals import *
+#from plugin.globals import *
 import sys
 import openstack as os_sdk
 import ipaddress

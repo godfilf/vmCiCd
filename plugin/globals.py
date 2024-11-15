@@ -2,8 +2,7 @@ import yaml
 import pulumi
 import pulumi_openstack as pstack
 from plugin.os_conn import connection
-from plugin.network_manager import get_network_id 
-from plugin.router_manager import create_router
+from plugin.network_manager import get_network_id
 
 # ######################### BLOCCO CARICAMENTO CONFIGURAZIONI
 # Carica la configurazione e le variabili di ambiente
@@ -50,25 +49,28 @@ if vlan_tag and vlans_list:
 network_name = config.require("network_name")
 network_ext = pstack.networking.get_network(name=config.require("external_net"))
 external_network_id = get_network_id(auth_url, username, password, tenant, network_ext.name)
+    
 
 
 
 
 router_name = f"router_to_external.{tenant_name}"
 router_exist = config.get_bool("router_exist")
+router_port_name = f"gateway_to_external.{network_name}"
 existing_router = conn.network.find_router(router_name)
-
-if not router_exist and (network_ext is not None or not network_ext):
-    print(f"Impostato il non utilizzo di un Virtual Router : router_exist = {router_exist}")
-    if not existing_router:
-        router = create_router(router_name, external_network_id)
-    else:
-        router = pstack.networking.Router(
-            resource_name=router_name,
-            admin_state_up=True,                     # Attiva il router 
-            opts=pulumi.ResourceOptions(import_=existing_router.id),
-            external_network_id=external_network_id  # ID della rete esterna
-        )
+#existing_router = conn.network.find_router(router_name)
+#
+#if not router_exist and (network_ext is not None or not network_ext):
+#    print(f"Impostato il non utilizzo di un Virtual Router : router_exist = {router_exist}")
+#    if not existing_router:
+#        router = create_router(router_name, external_network_id)
+#if existing_router:
+#    router = pstack.networking.Router(
+#        resource_name=router_name,
+#        admin_state_up=True,                     # Attiva il router 
+#        opts=pulumi.ResourceOptions(import_=existing_router.id),
+#        external_network_id=external_network_id  # ID della rete esterna
+#    )
 
         
 

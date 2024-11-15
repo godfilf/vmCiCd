@@ -35,3 +35,25 @@ def create_port_without_fixed_ip(port_name, network_id, subnet_id):
         no_security_groups=True,
         port_security_enabled=False
     )
+
+def import_port_with_fixed_ip(network, subnet):
+
+    cidr = next((vlan["subnet"] for vlan in vlans_list if vlan["id"] == vlan_tag), "10.0.0.0/24")
+    
+    # Ottieni il prefisso dell'indirizzo IP della subnet
+    ip_address = cidr.split('/')[0]
+    ip_prefix = '.'.join(ip_address.split('.')[:3])
+    desired_ip = f"{ip_prefix}.2"  # Imposta l'IP desiderato come xxx.yyy.zzz.2
+
+    existing_router_port = pstack.networking.get_port(name=router_port_name)
+    return pstack.networking.Port(
+        resource_name=router_port_name,
+        name=router_port_name,
+        network_id=network.id,
+        admin_state_up=True,
+        no_security_groups=True,
+        fixed_ips=[{"subnet_id": subnet.id, "ip_address": desired_ip}],
+        opts=pulumi.ResourceOptions(import_=existing_router_port.id),
+        port_security_enabled=False 
+    )
+
