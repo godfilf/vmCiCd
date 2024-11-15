@@ -7,6 +7,7 @@ import openstack as os_sdk
 import sys
 
 # importo tutte le var che ho creato, perchè il __main__.py era diventato illeggibile
+from plugin.pre_hook import *
 from plugin.globals import *
 from plugin.define_network_global_vars import *
 
@@ -27,6 +28,11 @@ def get_config_property(vmType, prop_name, default_value):
         if prop_name in {"keyPair", "volumes"}: return None
         print(f"Errore: La configurazione '{prop_name}' è mancante o errata per '{vmType}'. {e}")
         sys.exit(1)  # Termina il programma con un codice di uscita diverso da 0
+
+## Inizio di pre_hook
+if pulumi.runtime.is_dry_run(): 
+    pulumi.runtime.register_stack_transformation(protect_router)
+
 
 
 # Connessione e configurazione
