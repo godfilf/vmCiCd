@@ -6,11 +6,11 @@ from plugin.port_manager import create_port_without_fixed_ip
 
 # Funzione per creare un'istanza
 def create_instance(instanceName, flavor, image, network, server_group, optional_args, i):
-    instance_port = create_port_without_fixed_ip(f"{instanceName}-port-{i}.{tenant_name}", network.id, subnet.id)
+    instance_port = create_port_without_fixed_ip(f"{instanceName}-port-{i}-{stack}.{tenant_name}", network.id, subnet.id)
 
     return pstack.compute.Instance(
-        f"{instanceName}-{i}",
-        name=f"{instanceName}-{i}",
+        f"{instanceName}-{i}_{stack}.{tenant_name}",
+        name=f"{instanceName}-{i}_{stack}.{tenant_name}",
         flavor_name=flavor,
         image_name=image,
         networks=[{'uuid': network.id, 'name': network.name, 'port': instance_port.id}],

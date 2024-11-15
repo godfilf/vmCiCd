@@ -8,6 +8,7 @@ from plugin.network_manager import get_network_id
 # Carica la configurazione e le variabili di ambiente
 config = pulumi.Config()
 config_values = pulumi.runtime.get_config_env()
+stack = pulumi.get_stack()
 
 
 
