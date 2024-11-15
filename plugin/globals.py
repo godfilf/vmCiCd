@@ -47,8 +47,9 @@ if vlan_tag and vlans_list:
     # Cerca vlan_cidr corrispondente al vlan_tag
     vlan_cidr = next((vlan["subnet"] for vlan in vlans_list if vlan["id"] == vlan_tag), "10.0.0.0/24")
 
-network_name = config.require("network_name")
+network_name = f"{config.require('network_name')}_vlan_{vlan_tag}.{tenant_name}"
 network_ext = pstack.networking.get_network(name=config.require("external_net"))
+existing_network = conn.network.find_network(network_name)
 external_network_id = get_network_id(auth_url, username, password, tenant, network_ext.name)
     
 
@@ -57,7 +58,7 @@ external_network_id = get_network_id(auth_url, username, password, tenant, netwo
 
 router_name = f"router_to_external.{tenant_name}"
 router_exist = config.get_bool("router_exist")
-router_port_name = f"gateway_to_external_{vlan_tag}.{network_name}"
+router_port_name = f"gateway_to_external_vlan_{vlan_tag}.{network_name}"
 existing_router = conn.network.find_router(router_name)
 #existing_router = conn.network.find_router(router_name)
 #

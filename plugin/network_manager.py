@@ -38,6 +38,13 @@ def get_network_id(auth_url, username, password, tenant, network_name):
 #        existing_subnet = conn.network.find_subnet(vlan_subnet.id)
 #        return pstack.networking.Subnet.get(existing_subnet.name, existing_subnet.id)
 
+def import_existing_network(network_name, tenant, vlan_tag, zone_name, network):
+    network = pstack.networking.Network(
+        resource_name=f"{network_name}",
+        name=network_name,
+        opts=pulumi.ResourceOptions(import_=network.id),
+    )
+    return network
 
 def create_network(network_name, tenant, vlan_tag, zone_name):
     # Crea una nuova rete

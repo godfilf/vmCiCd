@@ -39,6 +39,11 @@ if router_exist:
             conn.network.delete_router(existing_router)
 
 
+#if not existing_network:
+#    network = create_network(network_name, tenant_name, vlan_tag, zone_name)
+#else:
+#    network = import_existing_network(network_name, tenant_name, vlan_tag, zone_name, existing_network)
+    
 network = create_network(network_name, tenant_name, vlan_tag, zone_name)
 subnet = network.id.apply(lambda id: create_subnet(router_exist, network_name, id, vlan_tag, tenant_name, vlan_cidr))
 
