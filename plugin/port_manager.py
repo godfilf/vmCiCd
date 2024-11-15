@@ -20,6 +20,7 @@ def create_port_with_fixed_ip(auth_url, username, password, tenant, port_name, n
         network_id=network.id,
         admin_state_up=True,
         fixed_ips=[{"subnet_id": subnet.id, "ip_address": desired_ip}],  # Imposta l'IP fisso specifico
+        tags=["pulumi_port_res"],
         no_security_groups=True,
         port_security_enabled=False
     )
@@ -32,6 +33,7 @@ def create_port_without_fixed_ip(port_name, network_id, subnet_id):
         network_id=network_id,  # Specifica la rete a cui la porta si connette
         fixed_ips=[{"subnet_id": subnet_id, "ip_address": None}],
         admin_state_up=True,  # Attiva la porta
+        tags=["pulumi_port_res"],
         no_security_groups=True,
         port_security_enabled=False
     )
@@ -54,6 +56,7 @@ def import_port_with_fixed_ip(network, subnet):
         no_security_groups=True,
         fixed_ips=[{"subnet_id": subnet.id, "ip_address": desired_ip}],
         opts=pulumi.ResourceOptions(import_=existing_router_port.id),
+        tags=["pulumi_port_res"],
         port_security_enabled=False 
     )
 

@@ -9,21 +9,33 @@ import pulumi.runtime
 
 if router_exist:
     ports = conn.network.ports()
-
     port_to_delete = next((port for port in ports if port.name == router_port_name), None)
 
     if port_to_delete:
-        router = conn.network.remove_interface_from_router(existing_router, subnet_id=port_to_delete.fixed_ips[0]["subnet_id"], port_id=port_to_delete.id)
+        port_to_delete_from_existing_router = conn.network.remove_interface_from_router(existing_router, subnet_id=port_to_delete.fixed_ips[0]["subnet_id"], port_id=port_to_delete.id)
         conn.network.delete_port(port_to_delete)
 
     if existing_router:
-        router_ports = list(conn.network.ports(device_id=existing_router.id))
         router = import_existing_router(router_name, existing_router, external_network_id)
-        user_ports = [
-            port for port in router_ports
-            if port.device_owner not in ('network:router_gateway', 'network:router_interface')
-        ]
-        if len(user_ports) == 0:
+
+
+
+        existing_subnets = {subnet.id for subnet in conn.network.subnets()}
+        print(f"Subnet esistenti nel progetto: {existing_subnets}")
+
+
+        router_ports = list(conn.network.ports(device_id=existing_router.id))
+        subnet_count = 0
+        for port in router_ports:
+            for fixed_ip in port.fixed_ips:
+                if fixed_ip["subnet_id"] in existing_subnets:
+                    subnet_count += 1
+                    break  # Evita di contare più volte la stessa porta
+        
+        print(f"Numero di porte con subnet esistente: {subnet_count}")
+
+
+        if subnet_count == 0:
             conn.network.delete_router(existing_router)
 
 
