@@ -36,7 +36,8 @@ if not router_exist and (network_ext is not None or not network_ext):
         router_port = create_port_with_fixed_ip(auth_url, username, password, tenant, router_port_name, network, subnet)
         router = create_router(router_name, external_network_id)
     else:
-        router_port = import_port_with_fixed_ip(network, subnet)
+        router_port_exist = conn.network.find_port(router_port_name)
+        router_port = import_port_with_fixed_ip(network, subnet) if router_port_exist else create_port_with_fixed_ip(auth_url, username, password, tenant, router_port_name, network, subnet)
 
     if existing_router:
         router = import_existing_router(router_name, existing_router, external_network_id)
