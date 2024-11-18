@@ -5,8 +5,6 @@ from plugin.router_manager import *
 import pulumi
 import pulumi.runtime
 
-# ################ CREAZIONE RETE DI PROGETTO
-
 if router_exist:
     ports = conn.network.ports()
     port_to_delete = next((port for port in ports if port.name == router_port_name), None)
@@ -39,13 +37,9 @@ if router_exist:
             conn.network.delete_router(existing_router)
 
 
-#if not existing_network:
-#    network = create_network(network_name, tenant_name, vlan_tag, zone_name)
-#else:
-#    network = import_existing_network(network_name, tenant_name, vlan_tag, zone_name, existing_network)
-    
 network = create_network(network_name, tenant_name, vlan_tag, zone_name)
 subnet = network.id.apply(lambda id: create_subnet(router_exist, network_name, id, vlan_tag, tenant_name, vlan_cidr))
+
 
 if not router_exist and (network_ext is not None or not network_ext):
     print(f"Impostato utilizzo di un Virtual Router : router_exist = {router_exist}")

@@ -56,7 +56,7 @@ external_network_id = get_network_id(auth_url, username, password, tenant, netwo
 
 
 
-router_name = f"router_to_external.{tenant_name}"
+router_name = f"router_to_external_vlan_{vlan_tag}.{tenant_name}"
 router_exist = config.get_bool("router_exist")
 router_port_name = f"gateway_to_external.{network_name}"
 existing_router = conn.network.find_router(router_name)
