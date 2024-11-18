@@ -1,6 +1,10 @@
 Il file di default `Pulumi.yaml` non viene usato. rimane solo per il corretto funzionamento di pulumi.
 Ho delegato tutto ai file `Pulumi.dev.yaml` e `Pulumi.resources.yaml`
 
+Questa versione, crea un solo router external, a cui attacca tutte le vlan che sono adibite all'accesso internet.
+Ma se si distrugge con destroy la prima app usata per creare il router, fallirà la distruzione del router perchè risulta usato da un altra porta.
+In teoria, sarebbe sufficiente un refresh, prima del destroy, ma così facendo, quando sarranno rimosse tutte le app, allora resterà il router
+che non verrà mai cancellato.
 
 Nel file `Pulumi.dev.yaml` ci sono solo le credenziali di accesso a openstack
 
