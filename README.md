@@ -42,3 +42,22 @@ resources:
       vmCount: 0
       keyPair: "kollaJump_ecdsa"
 ```
+
+
+
+
+################### appo code
+# ID o nome dell'istanza
+instance_id = "12345"  # Sostituisci con l'ID reale dell'istanza
+
+# Funzione per riavviare l'istanza
+def reboot_instance(ctx):
+    server = conn.compute.find_server(instance_id)
+    if server:
+        conn.compute.reboot_server(server, reboot_type="SOFT")  # SOFT o HARD
+    else:
+        pulumi.log.error(f"Impossibile trovare l'istanza con ID {instance_id}")
+
+# Esegui la funzione durante il ciclo Pulumi
+pulumi.runtime.run_in_stack(reboot_instance)
+

@@ -1,8 +1,9 @@
+from plugin.globals import vlan_tag, stack
 import pulumi_openstack as pstack
 
 def cd(conn, vmCount, instanceName, tenantName):
     """Crea o elimina il server group in base al valore di vmCount."""
-    server_group_name = f"{instanceName}.{tenantName}"
+    server_group_name = f"{instanceName}_{stack}.{tenantName}"
     
     # Crea o elimina il server group in base al valore di vmCount
     if vmCount > 0:

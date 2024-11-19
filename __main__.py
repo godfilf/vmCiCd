@@ -29,8 +29,6 @@ def get_config_property(vmType, prop_name, default_value):
         print(f"Errore: La configurazione '{prop_name}' è mancante o errata per '{vmType}'. {e}")
         sys.exit(1)  # Termina il programma con un codice di uscita diverso da 0
 
-## Inizio di pre_hook
-
 # Connessione e configurazione
 dns.manage_recordsets(conn, zone.id, instance_props)
 
