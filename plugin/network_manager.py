@@ -52,11 +52,11 @@ def create_network(network_name, tenant, vlan_tag, zone_name):
         resource_name=f"{network_name}",
         name=network_name,
         dns_domain=zone_name,
-        segments=[{
-            "network_type": "vlan",
-            "physical_network": "physnet1",
-            "segmentation_id": vlan_tag,
-        }],
+        #segments=[{
+        #    "network_type": "vlan",
+        #    "physical_network": "physnet1",
+        #    "segmentation_id": vlan_tag,
+        #}],
         admin_state_up=True,
     )
     return network
