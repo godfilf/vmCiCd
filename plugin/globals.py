@@ -22,7 +22,7 @@ auth_url=config_values.get("openstack:auth_url")
 conn = connection(auth_url, username, password, tenant)
 
 # Carica le risorse dal file YAML e ottieni le proprietà dell'istanza
-with open('Pulumi.resources.yaml', 'r') as yaml_file:
+with open(f'Pulumi.{stack}.resources.yaml', 'r') as yaml_file:
     resources = yaml.safe_load(yaml_file).get('resources', {})
 instance_props = resources.get('instance', {})
 

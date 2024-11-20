@@ -1,3 +1,32 @@
+1. scaricare Pulumi :
+```
+root@kollaJump:~# curl -sSL https://get.pulumi.com | sh
+=== Installing Pulumi 3.140.0 ===
++ Downloading https://github.com/pulumi/pulumi/releases/download/v3.140.0/pulumi-v3.140.0-linux-x64.tar.gz...
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+100  131M  100  131M    0     0  10.6M      0  0:00:12  0:00:12 --:--:-- 11.1M
++ Extracting to /root/.pulumi/bin
+
+=== Pulumi is now installed! 🍹 ===
++ Get started with Pulumi: https://www.pulumi.com/docs/quickstart
+```
+2. scaricare l'app da git
+3. Fare il login locale nella app:
+```
+root@kollaJump:~/vmCiCd# pulumi login file://.
+Logged in to kollaJump as root (file://.)
+root@kollaJump:~/vmCiCd# 
+```
+
+4. se sono state salvate già delle operazioni, e pushate su git, allora l'app mostra gli aggiornamenti degli stati.
+   Altrimenti è necessario effettuare la creazione degli stack "nuovi"
+
+5. Creazione di nuovi stack :
+
+
+
 Il file di default `Pulumi.yaml` non viene usato. rimane solo per il corretto funzionamento di pulumi.
 Ho delegato tutto ai file `Pulumi.dev.yaml` e `Pulumi.resources.yaml`
 
