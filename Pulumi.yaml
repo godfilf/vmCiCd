@@ -1,0 +1,52 @@
+## INFO
+## Questo file può essere lasciato così, in quanto creaiamo le risorse con il file `Pulumi.resources.dev.yaml`, a meno che non si usino delle 
+## VLAN e dunque è necessario configurarle per poterle usare durante la creazione delle reti:
+##
+## i.e.:
+##
+##    config:
+##      pulumi:tags:
+##        value:
+##          pulumi:template: python
+##      vlans:
+##        - id: 1       
+##          subnet: 10.0.0.1/24
+##        - id: 100
+##          subnet: 10.1.0.1/24
+##        - id: 101  
+##          subnet: 10.2.0.1/24
+##        - id: 102  
+##          subnet: 10.3.0.1/24
+##        - id: 103  
+##          subnet: 10.4.0.1/24
+##        - id: 104  
+##          subnet: 10.5.0.1/24
+##
+## Da notare che la desinenza `dev` alla fine del file, dipende esclusivamente dallo stack sul quale si sta lavorando 
+## con pulumi. Se si crea uno stack di `pro` o `stg`, allora bisognerà sostituire `dev` con l'opportuno nome dello stack.
+##
+name: NewApp
+description: A minimal Python Pulumi program
+runtime:
+  name: python
+  options:
+    toolchain: pip
+    virtualenv: venv
+config:
+  pulumi:tags:
+    value:
+      pulumi:template: python
+  vlans:
+    - id: 1       
+      subnet: 10.0.0.0/24
+    - id: 100
+      subnet: 10.1.0.0/24
+    - id: 101  
+      subnet: 10.2.0.0/24
+    - id: 102  
+      subnet: 10.3.0.0/24
+    - id: 103  
+      subnet: 10.4.0.0/24
+    - id: 104  
+      subnet: 10.5.0.0/24
+

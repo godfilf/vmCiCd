@@ -5,6 +5,10 @@ from plugin.router_manager import *
 import pulumi
 import pulumi.runtime
 
+network_ext = pstack.networking.get_network(name=config.require("external_net"))
+existing_network = conn.network.find_network(network_name)
+external_network_id = get_network_id(auth_url, username, password, tenant, network_ext.name)
+
 if router_exist:
     ports = conn.network.ports()
     port_to_delete = next((port for port in ports if port.name == router_port_name), None)

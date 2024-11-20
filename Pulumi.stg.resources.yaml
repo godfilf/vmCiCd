@@ -1,0 +1,61 @@
+## INFO
+## Se il parametro vmCount viene settato a zero, non verrà creata la risorsa, altrimenti se esistono una o più istanze,
+## vengono tutte cancellate. Decrementando il valore vengono rimosse solo ed esclusivamente le ultime
+##
+## Su tutti i volumi che crea in automatico, sarà usato il type ceph di default, se non specificato
+## Inoltre, se non viene specificato nessuna lista di volumi, sarà creata una istanza con volume di tipo ephemeral
+##
+## NON è possibile creare una istanza con un disco ephemeral ed un disco dati su block storage. Si può creare una 
+## una istanza con disco ephemeral oppure una istanza con disco di boot su block storage. Se è necessario avere uno
+## o più dischi dati aggiuntivi, allora bisogna creare istanze su block storage
+##
+## i.e.:
+## 
+##    resources:
+##      instance:
+##        custom:
+##          name: custom-compute01
+##          flavor: m1.tiny.compute01
+##          image: debian
+##          vmCount: 0
+##          keyPair: "kollaJump_ecdsa"
+##        volumes: 
+##          # così si crea un disco da 30Gb su volume type ceph.
+##          - description: "disco di tipo ceph" 
+##            size: 30
+##            type: ceph
+##        
+##          # così si usa un volume esistente di tipo bootable
+##          - description: "se usi un disco esistente"
+##            uuid: 526d9b36-78d3-4012-9adb-2c2523e6169e
+##            bootable: True
+##        
+##          # così si usa un volume già esistente, si da per assunto che l'id del disco non sia un disco bootable
+##          - description: "se usi un disco esistente"
+##            uuid: b4a4cae3-5c2e-46a4-80de-a68111c904ff
+##
+##          # così si definisce un volume bootable. 
+##          - description: "disco Dati"
+##            size: 12
+##            type: ceph
+##            bootable: True
+##            image: "debian"
+##
+##
+resources:
+  instance:
+    db: 
+      name: db_pulumi
+      flavor: m1.tiny
+      image: debian
+      vmCount: 0
+      keyPair: "kollaJump_ecdsa"
+      # se non specificato crea un disco ephemeral
+   
+    web:
+      name: web
+      flavor: m1.tiny
+      image: debian
+      vmCount: 1
+      keyPair: "kollaJump_ecdsa"
+

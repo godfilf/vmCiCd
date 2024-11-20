@@ -1,0 +1,12 @@
+encryptionsalt: v1:yWF7+6W4oXc=:v1:rD2J54ADngD9djMB:AE7p6Nxhpcp+aMlGOlEPdr73COrx5w==
+config:
+  openstack:userName: test.cluster-dev.ostack.cosmicnet     #
+  openstack:password: p1pp0123                              #
+  openstack:auth_url: http://10.10.10.99:5000               #
+  openstack:tenantName: test.cluster-dev.ostack.cosmicnet   #
+  openstack:region: RegionOne                               #
+  external_net: external.cluster-dev.ostack.cosmicnet       # La External Network DEVE esistere, perchè non viene creata da questa APP. Ma può essere None type o non definita.
+                                                            # Dunque se None o non definita, anche se router_exist: True, il router to external non viene creato
+  network_name: network                                     # Nome della network senza alcuna estensione di dominio. in questo caso diverrà `network_vlan_XXX.test.cluster-dev.ostack.cosmicnet`
+  router_exist: True                                        # Se a True, Utilizza come Def GW l'ip 1 della vlan. Se a False crea un router con GW 2
+  vlan_tag: 101                                             # se non specificato, viene ignorato. altrimenti prende info dal file Pulumi.dev.yaml (dev dipende solo dal tipo di stack che si sta usando)

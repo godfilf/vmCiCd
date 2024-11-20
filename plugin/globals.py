@@ -2,7 +2,8 @@ import yaml
 import pulumi
 import pulumi_openstack as pstack
 from plugin.os_conn import connection
-from plugin.network_manager import get_network_id
+#from plugin.network_manager import get_network_id
+
 
 # ######################### BLOCCO CARICAMENTO CONFIGURAZIONI
 # Carica la configurazione e le variabili di ambiente
@@ -48,9 +49,6 @@ if vlan_tag and vlans_list:
     vlan_cidr = next((vlan["subnet"] for vlan in vlans_list if vlan["id"] == vlan_tag), "10.0.0.0/24")
 
 network_name = f"{config.require('network_name')}_vlan_{vlan_tag}.{tenant_name}"
-network_ext = pstack.networking.get_network(name=config.require("external_net"))
-existing_network = conn.network.find_network(network_name)
-external_network_id = get_network_id(auth_url, username, password, tenant, network_ext.name)
     
 
 

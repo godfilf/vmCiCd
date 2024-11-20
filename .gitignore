@@ -1,2 +1,5 @@
 *.pyc
 venv/
+.pulumi/backups/
+.pulumi/history/
+

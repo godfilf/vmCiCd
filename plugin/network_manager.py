@@ -2,8 +2,10 @@
 import sys
 import openstack as os_sdk
 import ipaddress
+import pulumi
 import pulumi_openstack as pstack
 from plugin.os_conn import connection
+from plugin.globals import auth_url, username, password, tenant
 
 def get_network_id(auth_url, username, password, tenant, network_name):
     conn = connection(auth_url, username, password, tenant)
@@ -14,50 +16,32 @@ def get_network_id(auth_url, username, password, tenant, network_name):
     
     return net.id
 
-
-#def get_or_create_network():
-#    existing_network = conn.network.find_network(network_name)
-#    
-#    if not existing_network:
-#        network = create_network(network_name, tenant_name, vlan_tag, zone_name)
-#    else:
-#        network = pstack.networking.Network.get(network_name, existing_network.id)
-#    
-#    subnet = network.id.apply(lambda id: get_or_create_subnet(router_exist, network_name, id, vlan_tag, tenant_name))
-#
-#    return network, subnet
-#
-#
-#def get_or_create_subnet(router_exist, network_name, network_id, vlan_tag, tenant_name):
-#    subnets = conn.network.subnets(network_id=network_id)
-#    vlan_subnet = next((sn for sn in subnets if sn.cidr == vlan_cidr), None)
-#
-#    if not vlan_subnet:
-#        return create_subnet(router_exist, network_name, network_id, vlan_tag, tenant_name, vlan_cidr)
-#    else:
-#        existing_subnet = conn.network.find_subnet(vlan_subnet.id)
-#        return pstack.networking.Subnet.get(existing_subnet.name, existing_subnet.id)
-
 def import_existing_network(network_name, tenant, vlan_tag, zone_name, network):
     network = pstack.networking.Network(
         resource_name=f"{network_name}",
         name=network_name,
+        segments=[{
+            "network_type": "vlan",
+            "physical_network": "physnet1",
+            "segmentation_id": vlan_tag,
+        }],
         opts=pulumi.ResourceOptions(import_=network.id),
     )
     return network
 
 def create_network(network_name, tenant, vlan_tag, zone_name):
-    # Crea una nuova rete
+    # Crea una nuova rete con opzioni di rilevamento modifiche
     network = pstack.networking.Network(
         resource_name=f"{network_name}",
         name=network_name,
         dns_domain=zone_name,
-        #segments=[{
-        #    "network_type": "vlan",
-        #    "physical_network": "physnet1",
-        #    "segmentation_id": vlan_tag,
-        #}],
+        segments=[{
+            "network_type": "vlan",
+            "physical_network": "physnet1",
+            "segmentation_id": vlan_tag,
+        }],
         admin_state_up=True,
+        tags=[f'managed-by-pulumi']  # Aggiungi un tag di gestione
     )
     return network
 
