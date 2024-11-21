@@ -6,7 +6,7 @@ import pulumi
 import pulumi.runtime
 
 network_ext = pstack.networking.get_network(name=config.require("external_net"))
-existing_network = conn.network.find_network(network_name)
+existing_network = conn.network.find_network(network_name, detailed=True)
 external_network_id = get_network_id(auth_url, username, password, tenant, network_ext.name)
 
 if router_exist:

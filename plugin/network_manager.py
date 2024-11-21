@@ -41,8 +41,11 @@ def create_network(network_name, tenant, vlan_tag, zone_name):
             "segmentation_id": vlan_tag,
         }],
         admin_state_up=True,
+        opts=pulumi.ResourceOptions(ignore_changes=['segments']),
         tags=[f'managed-by-pulumi']  # Aggiungi un tag di gestione
     )
+    pulumi.log.debug(f"Dettagli network: {vars(network)}")
+    print(f"WARNING: Attivato - {network_name} ==> ignore_changes=['segments']")
     return network
 
 

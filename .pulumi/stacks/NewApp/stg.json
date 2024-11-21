@@ -4,7 +4,7 @@
         "stack": "organization/NewApp/stg",
         "latest": {
             "manifest": {
-                "time": "2024-11-20T17:51:03.966560878+01:00",
+                "time": "2024-11-21T10:58:36.420003813+01:00",
                 "magic": "26f3916fec7e347fdb2e19a90a70c92a60b40a458a31dbcfe05a27af84fec072",
                 "version": "v3.140.0"
             },
@@ -19,21 +19,21 @@
                     "urn": "urn:pulumi:stg::NewApp::pulumi:pulumi:Stack::NewApp-stg",
                     "custom": false,
                     "type": "pulumi:pulumi:Stack",
-                    "created": "2024-11-20T16:35:08.175030914Z",
-                    "modified": "2024-11-20T16:35:08.175030914Z",
+                    "created": "2024-11-21T09:53:47.937185203Z",
+                    "modified": "2024-11-21T09:53:47.937185203Z",
                     "sourcePosition": "project:///venv/lib/python3.11/site-packages/pulumi/runtime/stack.py#142"
                 },
                 {
                     "urn": "urn:pulumi:stg::NewApp::pulumi:providers:openstack::default_5_0_1",
                     "custom": true,
-                    "id": "05af6e1f-b81f-446e-99dd-efc70862653b",
+                    "id": "3f8e5d87-975e-4066-a591-ea3c1faac337",
                     "type": "pulumi:providers:openstack",
                     "inputs": {
                         "__internal": {},
                         "auth_url": "http://10.10.10.99:5000",
                         "password": {
                             "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
-                            "ciphertext": "v1:ilMXcSentjY2MsRm:0zzQB31bU5cro/dJn+F/Az7d6Dgi1xBa/kk="
+                            "ciphertext": "v1:Wx1w5fzkxX1/I+BU:F/raB4YCkLIQAXS3+qR5pzra1Z3ItWdar2M="
                         },
                         "region": "RegionOne",
                         "tenantName": "test.cluster-dev.ostack.cosmicnet",
@@ -44,34 +44,27 @@
                         "auth_url": "http://10.10.10.99:5000",
                         "password": {
                             "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
-                            "ciphertext": "v1:1PCo5KFheLUCQCr+:RczyiJTJEih/DcIAXOj9zjE/svlRA9GBVQk="
+                            "ciphertext": "v1:tXWCTd7X9cDh7KTi:d+G14fLBrPag3RMOqs4SPnR93QFaEprh0z0="
                         },
                         "region": "RegionOne",
                         "tenantName": "test.cluster-dev.ostack.cosmicnet",
                         "userName": "test.cluster-dev.ostack.cosmicnet",
                         "version": "5.0.1"
                     },
-                    "created": "2024-11-20T16:35:08.175908829Z",
-                    "modified": "2024-11-20T16:35:08.175908829Z"
+                    "created": "2024-11-21T09:53:47.918781309Z",
+                    "modified": "2024-11-21T09:53:47.918781309Z"
                 },
                 {
                     "urn": "urn:pulumi:stg::NewApp::openstack:networking/network:Network::network_vlan_100.test.cluster-dev.ostack.cosmicnet",
                     "custom": true,
-                    "id": "33c6c35b-c2ca-46a5-b40f-2ad9ad2cbdc7",
+                    "id": "44df7740-a473-4ac9-b5d8-9722f2b7746f",
                     "type": "openstack:networking/network:Network",
                     "inputs": {
                         "__defaults": [],
                         "adminStateUp": true,
                         "dnsDomain": "test.cluster-dev.ostack.cosmicnet.",
                         "name": "network_vlan_100.test.cluster-dev.ostack.cosmicnet",
-                        "segments": [
-                            {
-                                "__defaults": [],
-                                "networkType": "vlan",
-                                "physicalNetwork": "physnet1",
-                                "segmentationId": 100
-                            }
-                        ],
+                        "segments": [],
                         "tags": [
                             "managed-by-pulumi"
                         ]
@@ -86,19 +79,13 @@
                         "description": "",
                         "dnsDomain": "test.cluster-dev.ostack.cosmicnet.",
                         "external": false,
-                        "id": "33c6c35b-c2ca-46a5-b40f-2ad9ad2cbdc7",
+                        "id": "44df7740-a473-4ac9-b5d8-9722f2b7746f",
                         "mtu": 1500,
                         "name": "network_vlan_100.test.cluster-dev.ostack.cosmicnet",
                         "portSecurityEnabled": true,
                         "qosPolicyId": "",
                         "region": "RegionOne",
-                        "segments": [
-                            {
-                                "networkType": "vlan",
-                                "physicalNetwork": "physnet1",
-                                "segmentationId": 100
-                            }
-                        ],
+                        "segments": [],
                         "shared": false,
                         "tags": [
                             "managed-by-pulumi"
@@ -108,22 +95,18 @@
                         "valueSpecs": null
                     },
                     "parent": "urn:pulumi:stg::NewApp::pulumi:pulumi:Stack::NewApp-stg",
-                    "provider": "urn:pulumi:stg::NewApp::pulumi:providers:openstack::default_5_0_1::05af6e1f-b81f-446e-99dd-efc70862653b",
-                    "propertyDependencies": {
-                        "adminStateUp": [],
-                        "dnsDomain": [],
-                        "name": [],
-                        "segments": [],
-                        "tags": []
-                    },
-                    "created": "2024-11-20T16:35:17.49044606Z",
-                    "modified": "2024-11-20T16:47:23.925171183Z",
-                    "sourcePosition": "project:///venv/lib/python3.11/site-packages/pulumi_openstack/networking/network.py#880"
+                    "provider": "urn:pulumi:stg::NewApp::pulumi:providers:openstack::default_5_0_1::3f8e5d87-975e-4066-a591-ea3c1faac337",
+                    "created": "2024-11-21T09:53:57.061244164Z",
+                    "modified": "2024-11-21T09:58:36.164991655Z",
+                    "sourcePosition": "project:///venv/lib/python3.11/site-packages/pulumi_openstack/networking/network.py#880",
+                    "ignoreChanges": [
+                        "segments"
+                    ]
                 },
                 {
                     "urn": "urn:pulumi:stg::NewApp::openstack:networking/subnet:Subnet::subnet_vlan_100.network_vlan_100.test.cluster-dev.ostack.cosmicnet",
                     "custom": true,
-                    "id": "cd6a473f-4baf-4f3c-bf06-39e53726643f",
+                    "id": "d76d4fa1-e50d-4fb8-a6b3-924e13c45021",
                     "type": "openstack:networking/subnet:Subnet",
                     "inputs": {
                         "__defaults": [],
@@ -144,7 +127,7 @@
                         "gatewayIp": "10.1.0.2",
                         "ipVersion": 4,
                         "name": "subnet_vlan_100.network_vlan_100.test.cluster-dev.ostack.cosmicnet",
-                        "networkId": "33c6c35b-c2ca-46a5-b40f-2ad9ad2cbdc7"
+                        "networkId": "44df7740-a473-4ac9-b5d8-9722f2b7746f"
                     },
                     "outputs": {
                         "__meta": "{\"e2bfb730-ecaa-11e6-8f88-34363bc7c4c0\":{\"create\":600000000000,\"delete\":600000000000}}",
@@ -164,12 +147,12 @@
                         "dnsPublishFixedIp": true,
                         "enableDhcp": true,
                         "gatewayIp": "10.1.0.2",
-                        "id": "cd6a473f-4baf-4f3c-bf06-39e53726643f",
+                        "id": "d76d4fa1-e50d-4fb8-a6b3-924e13c45021",
                         "ipVersion": 4,
                         "ipv6AddressMode": "",
                         "ipv6RaMode": "",
                         "name": "subnet_vlan_100.network_vlan_100.test.cluster-dev.ostack.cosmicnet",
-                        "networkId": "33c6c35b-c2ca-46a5-b40f-2ad9ad2cbdc7",
+                        "networkId": "44df7740-a473-4ac9-b5d8-9722f2b7746f",
                         "noGateway": false,
                         "prefixLength": null,
                         "region": "RegionOne",
@@ -180,26 +163,15 @@
                         "valueSpecs": null
                     },
                     "parent": "urn:pulumi:stg::NewApp::pulumi:pulumi:Stack::NewApp-stg",
-                    "provider": "urn:pulumi:stg::NewApp::pulumi:providers:openstack::default_5_0_1::05af6e1f-b81f-446e-99dd-efc70862653b",
-                    "propertyDependencies": {
-                        "allocationPools": [],
-                        "cidr": [],
-                        "dnsNameservers": [],
-                        "dnsPublishFixedIp": [],
-                        "enableDhcp": [],
-                        "gatewayIp": [],
-                        "ipVersion": [],
-                        "name": [],
-                        "networkId": []
-                    },
-                    "created": "2024-11-20T16:35:24.310351352Z",
-                    "modified": "2024-11-20T16:44:49.577926351Z",
+                    "provider": "urn:pulumi:stg::NewApp::pulumi:providers:openstack::default_5_0_1::3f8e5d87-975e-4066-a591-ea3c1faac337",
+                    "created": "2024-11-21T09:54:05.280676569Z",
+                    "modified": "2024-11-21T09:58:36.017149599Z",
                     "sourcePosition": "project:///venv/lib/python3.11/site-packages/pulumi_openstack/networking/subnet.py#959"
                 },
                 {
                     "urn": "urn:pulumi:stg::NewApp::openstack:networking/router:Router::router_to_external_vlan_100.test.cluster-dev.ostack.cosmicnet",
                     "custom": true,
-                    "id": "cd9d5404-8c4b-479f-a963-2f3eb31a35ba",
+                    "id": "c2391df9-1873-4f25-b773-9b9d9a604e00",
                     "type": "openstack:networking/router:Router",
                     "inputs": {
                         "__defaults": [
@@ -219,13 +191,13 @@
                         "enableSnat": true,
                         "externalFixedIps": [
                             {
-                                "ipAddress": "10.0.0.186",
+                                "ipAddress": "10.0.0.211",
                                 "subnetId": "cce74849-aafd-49b0-acfa-8787c0ff8fcf"
                             }
                         ],
                         "externalNetworkId": "9e675188-aa2c-452d-8dbc-f62534cab266",
                         "externalSubnetIds": null,
-                        "id": "cd9d5404-8c4b-479f-a963-2f3eb31a35ba",
+                        "id": "c2391df9-1873-4f25-b773-9b9d9a604e00",
                         "name": "router_to_external_vlan_100.test.cluster-dev.ostack.cosmicnet",
                         "region": "RegionOne",
                         "tags": [],
@@ -234,19 +206,15 @@
                         "vendorOptions": null
                     },
                     "parent": "urn:pulumi:stg::NewApp::pulumi:pulumi:Stack::NewApp-stg",
-                    "provider": "urn:pulumi:stg::NewApp::pulumi:providers:openstack::default_5_0_1::05af6e1f-b81f-446e-99dd-efc70862653b",
-                    "propertyDependencies": {
-                        "adminStateUp": [],
-                        "externalNetworkId": []
-                    },
-                    "created": "2024-11-20T16:35:19.836031327Z",
-                    "modified": "2024-11-20T16:44:50.114524446Z",
+                    "provider": "urn:pulumi:stg::NewApp::pulumi:providers:openstack::default_5_0_1::3f8e5d87-975e-4066-a591-ea3c1faac337",
+                    "created": "2024-11-21T09:54:01.934591583Z",
+                    "modified": "2024-11-21T09:58:36.255463983Z",
                     "sourcePosition": "project:///venv/lib/python3.11/site-packages/pulumi_openstack/networking/router.py#737"
                 },
                 {
                     "urn": "urn:pulumi:stg::NewApp::openstack:compute/serverGroup:ServerGroup::web_stg.test.cluster-dev.ostack.cosmicnet",
                     "custom": true,
-                    "id": "0a21999b-8f1e-42a1-a3db-ace3fe3c6837",
+                    "id": "237766dc-04c5-4f5f-9beb-cb8f4ccaf8e9",
                     "type": "openstack:compute/serverGroup:ServerGroup",
                     "inputs": {
                         "__defaults": [],
@@ -258,9 +226,9 @@
                         }
                     },
                     "outputs": {
-                        "id": "0a21999b-8f1e-42a1-a3db-ace3fe3c6837",
+                        "id": "237766dc-04c5-4f5f-9beb-cb8f4ccaf8e9",
                         "members": [
-                            "83aed19c-f754-4b39-a1d0-f7479b82afc1"
+                            "c036e14f-dac7-4728-baef-12f6763cf3bc"
                         ],
                         "name": "web_stg.test.cluster-dev.ostack.cosmicnet",
                         "policies": "anti-affinity",
@@ -271,20 +239,15 @@
                         "valueSpecs": null
                     },
                     "parent": "urn:pulumi:stg::NewApp::pulumi:pulumi:Stack::NewApp-stg",
-                    "provider": "urn:pulumi:stg::NewApp::pulumi:providers:openstack::default_5_0_1::05af6e1f-b81f-446e-99dd-efc70862653b",
-                    "propertyDependencies": {
-                        "name": [],
-                        "policies": [],
-                        "rules": []
-                    },
-                    "created": "2024-11-20T16:35:11.749866351Z",
-                    "modified": "2024-11-20T16:44:49.396370137Z",
+                    "provider": "urn:pulumi:stg::NewApp::pulumi:providers:openstack::default_5_0_1::3f8e5d87-975e-4066-a591-ea3c1faac337",
+                    "created": "2024-11-21T09:53:50.904154077Z",
+                    "modified": "2024-11-21T09:58:35.881065543Z",
                     "sourcePosition": "project:///venv/lib/python3.11/site-packages/pulumi_openstack/compute/server_group.py#430"
                 },
                 {
                     "urn": "urn:pulumi:stg::NewApp::openstack:networking/port:Port::web-port-0-stg.test.cluster-dev.ostack.cosmicnet",
                     "custom": true,
-                    "id": "139415ad-a6d3-42cc-ab71-5523868088d9",
+                    "id": "224538df-4d3e-4afc-9a65-4f92222618c3",
                     "type": "openstack:networking/port:Port",
                     "inputs": {
                         "__defaults": [],
@@ -292,11 +255,11 @@
                         "fixedIps": [
                             {
                                 "__defaults": [],
-                                "subnetId": "cd6a473f-4baf-4f3c-bf06-39e53726643f"
+                                "subnetId": "d76d4fa1-e50d-4fb8-a6b3-924e13c45021"
                             }
                         ],
                         "name": "web-port-0-stg.test.cluster-dev.ostack.cosmicnet",
-                        "networkId": "33c6c35b-c2ca-46a5-b40f-2ad9ad2cbdc7",
+                        "networkId": "44df7740-a473-4ac9-b5d8-9722f2b7746f",
                         "noSecurityGroups": true,
                         "portSecurityEnabled": false,
                         "tags": [
@@ -307,7 +270,7 @@
                         "__meta": "{\"e2bfb730-ecaa-11e6-8f88-34363bc7c4c0\":{\"create\":600000000000,\"delete\":600000000000}}",
                         "adminStateUp": true,
                         "allFixedIps": [
-                            "10.1.0.190"
+                            "10.1.0.22"
                         ],
                         "allSecurityGroupIds": [],
                         "allTags": [
@@ -322,13 +285,13 @@
                             "vnicType": "normal"
                         },
                         "description": "",
-                        "deviceId": "83aed19c-f754-4b39-a1d0-f7479b82afc1",
+                        "deviceId": "c036e14f-dac7-4728-baef-12f6763cf3bc",
                         "deviceOwner": "compute:nova",
                         "dnsAssignments": [
                             {
                                 "fqdn": "web-0-stg.test.cluster-dev.ostack.cosmicnet.",
                                 "hostname": "web-0-stg",
-                                "ip_address": "10.1.0.190"
+                                "ip_address": "10.1.0.22"
                             }
                         ],
                         "dnsName": "web-0-stg",
@@ -336,13 +299,13 @@
                         "fixedIps": [
                             {
                                 "ipAddress": "",
-                                "subnetId": "cd6a473f-4baf-4f3c-bf06-39e53726643f"
+                                "subnetId": "d76d4fa1-e50d-4fb8-a6b3-924e13c45021"
                             }
                         ],
-                        "id": "139415ad-a6d3-42cc-ab71-5523868088d9",
-                        "macAddress": "fa:16:3e:1a:32:7e",
+                        "id": "224538df-4d3e-4afc-9a65-4f92222618c3",
+                        "macAddress": "fa:16:3e:e9:a5:1c",
                         "name": "web-port-0-stg.test.cluster-dev.ostack.cosmicnet",
-                        "networkId": "33c6c35b-c2ca-46a5-b40f-2ad9ad2cbdc7",
+                        "networkId": "44df7740-a473-4ac9-b5d8-9722f2b7746f",
                         "noFixedIp": null,
                         "noSecurityGroups": true,
                         "portSecurityEnabled": false,
@@ -357,32 +320,27 @@
                     },
                     "parent": "urn:pulumi:stg::NewApp::pulumi:pulumi:Stack::NewApp-stg",
                     "dependencies": [
-                        "urn:pulumi:stg::NewApp::openstack:networking/subnet:Subnet::subnet_vlan_100.network_vlan_100.test.cluster-dev.ostack.cosmicnet",
-                        "urn:pulumi:stg::NewApp::openstack:networking/network:Network::network_vlan_100.test.cluster-dev.ostack.cosmicnet"
+                        "urn:pulumi:stg::NewApp::openstack:networking/network:Network::network_vlan_100.test.cluster-dev.ostack.cosmicnet",
+                        "urn:pulumi:stg::NewApp::openstack:networking/subnet:Subnet::subnet_vlan_100.network_vlan_100.test.cluster-dev.ostack.cosmicnet"
                     ],
-                    "provider": "urn:pulumi:stg::NewApp::pulumi:providers:openstack::default_5_0_1::05af6e1f-b81f-446e-99dd-efc70862653b",
+                    "provider": "urn:pulumi:stg::NewApp::pulumi:providers:openstack::default_5_0_1::3f8e5d87-975e-4066-a591-ea3c1faac337",
                     "propertyDependencies": {
-                        "adminStateUp": [],
                         "fixedIps": [
-                            "urn:pulumi:stg::NewApp::openstack:networking/subnet:Subnet::subnet_vlan_100.network_vlan_100.test.cluster-dev.ostack.cosmicnet",
-                            "urn:pulumi:stg::NewApp::openstack:networking/network:Network::network_vlan_100.test.cluster-dev.ostack.cosmicnet"
+                            "urn:pulumi:stg::NewApp::openstack:networking/network:Network::network_vlan_100.test.cluster-dev.ostack.cosmicnet",
+                            "urn:pulumi:stg::NewApp::openstack:networking/subnet:Subnet::subnet_vlan_100.network_vlan_100.test.cluster-dev.ostack.cosmicnet"
                         ],
-                        "name": [],
                         "networkId": [
                             "urn:pulumi:stg::NewApp::openstack:networking/network:Network::network_vlan_100.test.cluster-dev.ostack.cosmicnet"
-                        ],
-                        "noSecurityGroups": [],
-                        "portSecurityEnabled": [],
-                        "tags": []
+                        ]
                     },
-                    "created": "2024-11-20T16:35:31.719013049Z",
-                    "modified": "2024-11-20T16:44:50.347006801Z",
+                    "created": "2024-11-21T09:54:15.707923362Z",
+                    "modified": "2024-11-21T09:58:36.138177519Z",
                     "sourcePosition": "project:///venv/lib/python3.11/site-packages/pulumi_openstack/networking/port.py#1212"
                 },
                 {
                     "urn": "urn:pulumi:stg::NewApp::openstack:networking/port:Port::gateway_to_external.network_vlan_100.test.cluster-dev.ostack.cosmicnet",
                     "custom": true,
-                    "id": "a550e554-a711-4b44-981b-ffd0923201e3",
+                    "id": "a21e334c-5536-40c8-ba96-ee97cfa437fa",
                     "type": "openstack:networking/port:Port",
                     "inputs": {
                         "__defaults": [],
@@ -391,11 +349,11 @@
                             {
                                 "__defaults": [],
                                 "ipAddress": "10.1.0.2",
-                                "subnetId": "cd6a473f-4baf-4f3c-bf06-39e53726643f"
+                                "subnetId": "d76d4fa1-e50d-4fb8-a6b3-924e13c45021"
                             }
                         ],
                         "name": "gateway_to_external.network_vlan_100.test.cluster-dev.ostack.cosmicnet",
-                        "networkId": "33c6c35b-c2ca-46a5-b40f-2ad9ad2cbdc7",
+                        "networkId": "44df7740-a473-4ac9-b5d8-9722f2b7746f",
                         "noSecurityGroups": true,
                         "portSecurityEnabled": false,
                         "tags": [
@@ -421,7 +379,7 @@
                             "vnicType": "normal"
                         },
                         "description": "",
-                        "deviceId": "cd9d5404-8c4b-479f-a963-2f3eb31a35ba",
+                        "deviceId": "c2391df9-1873-4f25-b773-9b9d9a604e00",
                         "deviceOwner": "network:router_interface",
                         "dnsAssignments": [
                             {
@@ -435,13 +393,13 @@
                         "fixedIps": [
                             {
                                 "ipAddress": "10.1.0.2",
-                                "subnetId": "cd6a473f-4baf-4f3c-bf06-39e53726643f"
+                                "subnetId": "d76d4fa1-e50d-4fb8-a6b3-924e13c45021"
                             }
                         ],
-                        "id": "a550e554-a711-4b44-981b-ffd0923201e3",
-                        "macAddress": "fa:16:3e:25:2a:c6",
+                        "id": "a21e334c-5536-40c8-ba96-ee97cfa437fa",
+                        "macAddress": "fa:16:3e:60:57:e3",
                         "name": "gateway_to_external.network_vlan_100.test.cluster-dev.ostack.cosmicnet",
-                        "networkId": "33c6c35b-c2ca-46a5-b40f-2ad9ad2cbdc7",
+                        "networkId": "44df7740-a473-4ac9-b5d8-9722f2b7746f",
                         "noFixedIp": null,
                         "noSecurityGroups": true,
                         "portSecurityEnabled": false,
@@ -456,32 +414,27 @@
                     },
                     "parent": "urn:pulumi:stg::NewApp::pulumi:pulumi:Stack::NewApp-stg",
                     "dependencies": [
-                        "urn:pulumi:stg::NewApp::openstack:networking/subnet:Subnet::subnet_vlan_100.network_vlan_100.test.cluster-dev.ostack.cosmicnet",
-                        "urn:pulumi:stg::NewApp::openstack:networking/network:Network::network_vlan_100.test.cluster-dev.ostack.cosmicnet"
+                        "urn:pulumi:stg::NewApp::openstack:networking/network:Network::network_vlan_100.test.cluster-dev.ostack.cosmicnet",
+                        "urn:pulumi:stg::NewApp::openstack:networking/subnet:Subnet::subnet_vlan_100.network_vlan_100.test.cluster-dev.ostack.cosmicnet"
                     ],
-                    "provider": "urn:pulumi:stg::NewApp::pulumi:providers:openstack::default_5_0_1::05af6e1f-b81f-446e-99dd-efc70862653b",
+                    "provider": "urn:pulumi:stg::NewApp::pulumi:providers:openstack::default_5_0_1::3f8e5d87-975e-4066-a591-ea3c1faac337",
                     "propertyDependencies": {
-                        "adminStateUp": [],
                         "fixedIps": [
-                            "urn:pulumi:stg::NewApp::openstack:networking/subnet:Subnet::subnet_vlan_100.network_vlan_100.test.cluster-dev.ostack.cosmicnet",
-                            "urn:pulumi:stg::NewApp::openstack:networking/network:Network::network_vlan_100.test.cluster-dev.ostack.cosmicnet"
+                            "urn:pulumi:stg::NewApp::openstack:networking/network:Network::network_vlan_100.test.cluster-dev.ostack.cosmicnet",
+                            "urn:pulumi:stg::NewApp::openstack:networking/subnet:Subnet::subnet_vlan_100.network_vlan_100.test.cluster-dev.ostack.cosmicnet"
                         ],
-                        "name": [],
                         "networkId": [
                             "urn:pulumi:stg::NewApp::openstack:networking/network:Network::network_vlan_100.test.cluster-dev.ostack.cosmicnet"
-                        ],
-                        "noSecurityGroups": [],
-                        "portSecurityEnabled": [],
-                        "tags": []
+                        ]
                     },
-                    "created": "2024-11-20T16:35:31.690719506Z",
-                    "modified": "2024-11-20T16:44:49.808802121Z",
+                    "created": "2024-11-21T09:54:13.92877628Z",
+                    "modified": "2024-11-21T09:58:35.940023042Z",
                     "sourcePosition": "project:///venv/lib/python3.11/site-packages/pulumi_openstack/networking/port.py#1212"
                 },
                 {
                     "urn": "urn:pulumi:stg::NewApp::openstack:compute/instance:Instance::web-0_stg",
                     "custom": true,
-                    "id": "83aed19c-f754-4b39-a1d0-f7479b82afc1",
+                    "id": "c036e14f-dac7-4728-baef-12f6763cf3bc",
                     "type": "openstack:compute/instance:Instance",
                     "inputs": {
                         "__defaults": [
@@ -502,26 +455,26 @@
                                 ],
                                 "accessNetwork": false,
                                 "name": "network_vlan_100.test.cluster-dev.ostack.cosmicnet",
-                                "port": "139415ad-a6d3-42cc-ab71-5523868088d9",
-                                "uuid": "33c6c35b-c2ca-46a5-b40f-2ad9ad2cbdc7"
+                                "port": "224538df-4d3e-4afc-9a65-4f92222618c3",
+                                "uuid": "44df7740-a473-4ac9-b5d8-9722f2b7746f"
                             }
                         ],
                         "powerState": "active",
                         "schedulerHints": [
                             {
                                 "__defaults": [],
-                                "group": "0a21999b-8f1e-42a1-a3db-ace3fe3c6837"
+                                "group": "237766dc-04c5-4f5f-9beb-cb8f4ccaf8e9"
                             }
                         ],
                         "stopBeforeDestroy": false
                     },
                     "outputs": {
                         "__meta": "{\"e2bfb730-ecaa-11e6-8f88-34363bc7c4c0\":{\"create\":1800000000000,\"delete\":1800000000000,\"update\":1800000000000}}",
-                        "accessIpV4": "10.1.0.190",
+                        "accessIpV4": "10.1.0.22",
                         "accessIpV6": "",
                         "adminPass": {
                             "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
-                            "ciphertext": "v1:Rwq0dgKDU4vOLk5v:FJuBrTqzEARkmLYQHET4h60RJRA="
+                            "ciphertext": "v1:n8g1G6m8Od3AHXre:YyzL3de+eU8jGoIUQ8QwN+1c7oM="
                         },
                         "allMetadata": {},
                         "allTags": [],
@@ -529,11 +482,11 @@
                         "availabilityZoneHints": null,
                         "blockDevices": [],
                         "configDrive": null,
-                        "created": "2024-11-20 16:35:35 +0000 UTC",
+                        "created": "2024-11-21 09:54:20 +0000 UTC",
                         "flavorId": "45dc5d43-d3c7-49a4-8f3b-ef788781ab88",
                         "flavorName": "m1.tiny",
                         "forceDelete": false,
-                        "id": "83aed19c-f754-4b39-a1d0-f7479b82afc1",
+                        "id": "c036e14f-dac7-4728-baef-12f6763cf3bc",
                         "imageId": "882a85bf-b155-49ba-8875-e0c001230c25",
                         "imageName": "debian",
                         "keyPair": "kollaJump_ecdsa",
@@ -543,12 +496,12 @@
                         "networks": [
                             {
                                 "accessNetwork": false,
-                                "fixedIpV4": "10.1.0.190",
+                                "fixedIpV4": "10.1.0.22",
                                 "fixedIpV6": "",
-                                "mac": "fa:16:3e:1a:32:7e",
+                                "mac": "fa:16:3e:e9:a5:1c",
                                 "name": "network_vlan_100.test.cluster-dev.ostack.cosmicnet",
-                                "port": "139415ad-a6d3-42cc-ab71-5523868088d9",
-                                "uuid": "33c6c35b-c2ca-46a5-b40f-2ad9ad2cbdc7"
+                                "port": "224538df-4d3e-4afc-9a65-4f92222618c3",
+                                "uuid": "44df7740-a473-4ac9-b5d8-9722f2b7746f"
                             }
                         ],
                         "personalities": [],
@@ -560,7 +513,7 @@
                                 "buildNearHostIp": "",
                                 "differentCells": [],
                                 "differentHosts": [],
-                                "group": "0a21999b-8f1e-42a1-a3db-ace3fe3c6837",
+                                "group": "237766dc-04c5-4f5f-9beb-cb8f4ccaf8e9",
                                 "queries": [],
                                 "sameHosts": [],
                                 "targetCell": ""
@@ -569,23 +522,18 @@
                         "securityGroups": [],
                         "stopBeforeDestroy": false,
                         "tags": [],
-                        "updated": "2024-11-20 16:35:54 +0000 UTC",
+                        "updated": "2024-11-21 09:54:40 +0000 UTC",
                         "userData": null,
                         "vendorOptions": null
                     },
                     "parent": "urn:pulumi:stg::NewApp::pulumi:pulumi:Stack::NewApp-stg",
                     "dependencies": [
                         "urn:pulumi:stg::NewApp::openstack:networking/network:Network::network_vlan_100.test.cluster-dev.ostack.cosmicnet",
-                        "urn:pulumi:stg::NewApp::openstack:compute/serverGroup:ServerGroup::web_stg.test.cluster-dev.ostack.cosmicnet",
-                        "urn:pulumi:stg::NewApp::openstack:networking/port:Port::web-port-0-stg.test.cluster-dev.ostack.cosmicnet"
+                        "urn:pulumi:stg::NewApp::openstack:networking/port:Port::web-port-0-stg.test.cluster-dev.ostack.cosmicnet",
+                        "urn:pulumi:stg::NewApp::openstack:compute/serverGroup:ServerGroup::web_stg.test.cluster-dev.ostack.cosmicnet"
                     ],
-                    "provider": "urn:pulumi:stg::NewApp::pulumi:providers:openstack::default_5_0_1::05af6e1f-b81f-446e-99dd-efc70862653b",
+                    "provider": "urn:pulumi:stg::NewApp::pulumi:providers:openstack::default_5_0_1::3f8e5d87-975e-4066-a591-ea3c1faac337",
                     "propertyDependencies": {
-                        "blockDevices": [],
-                        "flavorName": [],
-                        "imageName": [],
-                        "keyPair": [],
-                        "name": [],
                         "networks": [
                             "urn:pulumi:stg::NewApp::openstack:networking/port:Port::web-port-0-stg.test.cluster-dev.ostack.cosmicnet",
                             "urn:pulumi:stg::NewApp::openstack:networking/network:Network::network_vlan_100.test.cluster-dev.ostack.cosmicnet"
@@ -597,38 +545,38 @@
                     "additionalSecretOutputs": [
                         "adminPass"
                     ],
-                    "created": "2024-11-20T16:35:56.882938185Z",
-                    "modified": "2024-11-20T16:44:50.55395207Z",
+                    "created": "2024-11-21T09:54:51.984004899Z",
+                    "modified": "2024-11-21T09:58:36.403492321Z",
                     "sourcePosition": "project:///venv/lib/python3.11/site-packages/pulumi_openstack/compute/instance.py#1257"
                 },
                 {
                     "urn": "urn:pulumi:stg::NewApp::openstack:networking/routerInterface:RouterInterface::router-interface",
                     "custom": true,
-                    "id": "a550e554-a711-4b44-981b-ffd0923201e3",
+                    "id": "a21e334c-5536-40c8-ba96-ee97cfa437fa",
                     "type": "openstack:networking/routerInterface:RouterInterface",
                     "inputs": {
                         "__defaults": [
                             "forceDestroy"
                         ],
                         "forceDestroy": false,
-                        "portId": "a550e554-a711-4b44-981b-ffd0923201e3",
-                        "routerId": "cd9d5404-8c4b-479f-a963-2f3eb31a35ba"
+                        "portId": "a21e334c-5536-40c8-ba96-ee97cfa437fa",
+                        "routerId": "c2391df9-1873-4f25-b773-9b9d9a604e00"
                     },
                     "outputs": {
                         "__meta": "{\"e2bfb730-ecaa-11e6-8f88-34363bc7c4c0\":{\"create\":600000000000,\"delete\":600000000000}}",
                         "forceDestroy": false,
-                        "id": "a550e554-a711-4b44-981b-ffd0923201e3",
-                        "portId": "a550e554-a711-4b44-981b-ffd0923201e3",
+                        "id": "a21e334c-5536-40c8-ba96-ee97cfa437fa",
+                        "portId": "a21e334c-5536-40c8-ba96-ee97cfa437fa",
                         "region": "RegionOne",
-                        "routerId": "cd9d5404-8c4b-479f-a963-2f3eb31a35ba",
-                        "subnetId": "cd6a473f-4baf-4f3c-bf06-39e53726643f"
+                        "routerId": "c2391df9-1873-4f25-b773-9b9d9a604e00",
+                        "subnetId": "d76d4fa1-e50d-4fb8-a6b3-924e13c45021"
                     },
                     "parent": "urn:pulumi:stg::NewApp::pulumi:pulumi:Stack::NewApp-stg",
                     "dependencies": [
                         "urn:pulumi:stg::NewApp::openstack:networking/port:Port::gateway_to_external.network_vlan_100.test.cluster-dev.ostack.cosmicnet",
                         "urn:pulumi:stg::NewApp::openstack:networking/router:Router::router_to_external_vlan_100.test.cluster-dev.ostack.cosmicnet"
                     ],
-                    "provider": "urn:pulumi:stg::NewApp::pulumi:providers:openstack::default_5_0_1::05af6e1f-b81f-446e-99dd-efc70862653b",
+                    "provider": "urn:pulumi:stg::NewApp::pulumi:providers:openstack::default_5_0_1::3f8e5d87-975e-4066-a591-ea3c1faac337",
                     "propertyDependencies": {
                         "portId": [
                             "urn:pulumi:stg::NewApp::openstack:networking/port:Port::gateway_to_external.network_vlan_100.test.cluster-dev.ostack.cosmicnet"
@@ -637,8 +585,8 @@
                             "urn:pulumi:stg::NewApp::openstack:networking/router:Router::router_to_external_vlan_100.test.cluster-dev.ostack.cosmicnet"
                         ]
                     },
-                    "created": "2024-11-20T16:35:44.797727423Z",
-                    "modified": "2024-11-20T16:35:44.797727423Z",
+                    "created": "2024-11-21T09:54:28.01224943Z",
+                    "modified": "2024-11-21T09:54:28.01224943Z",
                     "sourcePosition": "project:///venv/lib/python3.11/site-packages/pulumi_openstack/networking/router_interface.py#337"
                 }
             ],
